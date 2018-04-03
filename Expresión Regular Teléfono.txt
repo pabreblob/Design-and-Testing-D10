@@ -1,0 +1,3 @@
+Válido con la cadena vacía (sin espacios), una secuencia de números o una secuencia de números precedida del signo +
+
+(^$)|(^(\+)?(\d)+$)
