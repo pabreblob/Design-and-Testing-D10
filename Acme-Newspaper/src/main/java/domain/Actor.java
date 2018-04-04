@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
@@ -63,7 +64,6 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@Pattern(regexp = "(^$)|(^(\\+)?(\\d)+$)")
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPhone() {
 		return this.phone;
 	}
@@ -73,6 +73,7 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@Email
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getEmail() {
 		return this.email;

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
@@ -74,6 +75,7 @@ public class FollowUp extends DomainEntity {
 	}
 
 	@NotNull
+	@ElementCollection
 	public Collection<String> getPictureUrls() {
 		return this.pictureUrls;
 	}
