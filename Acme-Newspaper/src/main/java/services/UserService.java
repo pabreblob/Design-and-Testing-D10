@@ -1,0 +1,104 @@
+
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.validation.Validator;
+
+import repositories.UserRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
+import security.UserAccountService;
+import domain.User;
+
+@Service
+@Transactional
+public class UserService {
+
+	@Autowired
+	private UserRepository		userRepository;
+	@Autowired
+	private UserAccountService	userAccountService;
+	@Autowired
+	private Validator			validator;
+
+
+	public UserService() {
+		super();
+	}
+
+	public User create() {
+		final User user = new User();
+
+		final Collection<User> followers = new ArrayList<>();
+		final Collection<User> following = new ArrayList<>();
+
+		user.setFollowers(followers);
+		user.setFollowing(following);
+
+		final UserAccount ua = this.userAccountService.create();
+		user.setUserAccount(ua);
+
+		final List<Authority> authorities = new ArrayList<Authority>();
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.USER);
+		authorities.add(auth);
+		user.getUserAccount().setAuthorities(authorities);
+
+		return user;
+	}
+
+	public User save(final User user) {
+		Assert.notNull(user);
+
+		if (user.getId() == 0) {
+			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			final String hash = encoder.encodePassword(user.getUserAccount().getPassword(), null);
+			user.getUserAccount().setPassword(hash);
+		}
+
+		final List<Authority> authorities = new ArrayList<Authority>();
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.USER);
+		authorities.add(auth);
+		user.getUserAccount().setAuthorities(authorities);
+		final UserAccount ua = this.userAccountService.save(user.getUserAccount());
+		user.setUserAccount(ua);
+
+		final User res = this.userRepository.save(user);
+		return res;
+	}
+
+	public User findOne(final int idUser) {
+		Assert.isTrue(idUser != 0);
+		final User res = this.userRepository.findOne(idUser);
+		return res;
+	}
+
+	public Collection<User> findAll() {
+		final Collection<User> res;
+		res = this.userRepository.findAll();
+		return res;
+	}
+
+	public User findByUserAccountId(final int userAccountId) {
+		Assert.isTrue(userAccountId != 0);
+		final User res = this.userRepository.findUserByUserAccountId(userAccountId);
+		return res;
+	}
+
+	public User findByPrincipal() {
+		final UserAccount u = LoginService.getPrincipal();
+		final User res = this.userRepository.findUserByUserAccountId(u.getId());
+		return res;
+	}
+
+}
