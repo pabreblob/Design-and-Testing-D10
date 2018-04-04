@@ -22,7 +22,7 @@ public class User extends Actor {
 	}
 
 	@NotNull
-	@ManyToMany
+	@ManyToMany(mappedBy = "following")
 	public Collection<User> getFollowers() {
 		return this.followers;
 	}
