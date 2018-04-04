@@ -51,7 +51,6 @@ public class Article extends DomainEntity {
 	}
 
 	@Valid
-	@NotNull
 	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@Temporal(TemporalType.TIMESTAMP)
