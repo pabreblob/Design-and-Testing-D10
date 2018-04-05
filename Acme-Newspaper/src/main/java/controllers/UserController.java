@@ -5,9 +5,11 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.UserService;
@@ -84,6 +86,29 @@ public class UserController extends AbstractController {
 		result = new ModelAndView("user/edit");
 		result.addObject("userForm", userForm);
 		result.addObject("message", messageCode);
+		return result;
+	}
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int userId) {
+		Assert.isTrue(userId != 0);
+		final User u = this.userService.findOne(userId);
+		Assert.notNull(u);
+		final ModelAndView result = new ModelAndView("user/display");
+		result.addObject("user", u);
+
+		User principal = null;
+		try {
+			principal = this.userService.findByPrincipal();
+		} catch (final Throwable oops) {
+		}
+		if (principal != null) {
+			if (!principal.getFollowing().contains(u))
+				result.addObject("following", false);
+			else
+				result.addObject("following", true);
+		} else
+			result.addObject("following", false);
 		return result;
 	}
 }

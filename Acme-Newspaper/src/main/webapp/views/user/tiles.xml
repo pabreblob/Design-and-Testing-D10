@@ -35,4 +35,9 @@
 		<put-attribute name="title" value="People you are following" />
 		<put-attribute name="body" value="/views/user/list.jsp" />
 	</definition>
+	
+	<definition name="user/display" extends="master.page">	
+		<put-attribute name="title" value="User profile" />
+		<put-attribute name="body" value="/views/user/display.jsp" />
+	</definition>
 </tiles-definitions>
