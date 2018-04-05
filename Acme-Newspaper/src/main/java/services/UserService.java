@@ -116,8 +116,8 @@ public class UserService {
 	public void unfollow(final User follower, final User followed) {
 		Assert.notNull(follower);
 		Assert.notNull(followed);
-		Assert.isTrue(!follower.getFollowing().contains(followed));
-		Assert.isTrue(!followed.getFollowers().contains(follower));
+		Assert.isTrue(follower.getFollowing().contains(followed));
+		Assert.isTrue(followed.getFollowers().contains(follower));
 
 		follower.getFollowing().remove(followed);
 		followed.getFollowers().remove(follower);

@@ -23,7 +23,7 @@
 	</display:column>
 	<jstl:if test="${unfollow}">
 		<display:column>
-			<a href="user/unfollow.do?userId=${row.id}"> <spring:message
+			<a href="user/user/unfollow.do?userId=${row.id}"> <spring:message
 					code="user.unfollow" />
 			</a>
 		</display:column>
