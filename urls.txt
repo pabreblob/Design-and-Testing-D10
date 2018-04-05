@@ -1,0 +1,11 @@
+//Todos
+Periodicos publicados: https://localhost:8443/Acme-Newspaper/newspaper/list.do
+Busqueda de periódicos: https://localhost:8443/Acme-Newspaper/newspaper/search.do
+
+//User
+Listado de sus periódicos: https://localhost:8443/Acme-Newspaper/newspaper/user/list.do
+Crear un periódico: https://localhost:8443/Acme-Newspaper/newspaper/user/create.do
+
+//Admin
+Listado de todos los periódicos: https://localhost:8443/Acme-Newspaper/newspaper/admin/list.do
+Listado de periódicos sospechosos: https://localhost:8443/Acme-Newspaper/newspaper/admin/list-marked.do
