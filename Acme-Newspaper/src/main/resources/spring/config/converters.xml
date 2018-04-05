@@ -34,6 +34,12 @@
 		<bean class="converters.StringToArticleConverter" />
 		<bean class="converters.FollowUpToStringConverter"/>
 		<bean class="converters.StringToFollowUpConverter" />
+		<bean class="converters.CustomerToStringConverter"/>
+		<bean class="converters.StringToCustomerConverter" />
+		<bean class="converters.ChirpToStringConverter"/>
+		<bean class="converters.StringToChirpConverter" />
+		<bean class="converters.TabooWordToStringConverter"/>
+		<bean class="converters.StringToTabooWordConverter" />
 				
 	</util:list>
 	
