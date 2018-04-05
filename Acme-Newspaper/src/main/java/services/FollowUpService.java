@@ -42,6 +42,7 @@ public class FollowUpService {
 	public FollowUp createFollowUp() {
 		FollowUp res;
 		res = new FollowUp();
+		res.setMarked(false);
 		return res;
 	}
 	public FollowUp save(final FollowUp followUp) {
@@ -92,6 +93,10 @@ public class FollowUpService {
 	// Other business methods -------------------------------------------------
 	public Collection<FollowUp> findFollowUpsByArticle(final int articleId) {
 		final Collection<FollowUp> res = this.followUpRepository.findFollowUpsByArticle(articleId);
+		return res;
+	}
+	public Collection<FollowUp> findFollowUpsByUser(final int userId) {
+		final Collection<FollowUp> res = this.followUpRepository.findFollowUpsByUser(userId);
 		return res;
 	}
 }

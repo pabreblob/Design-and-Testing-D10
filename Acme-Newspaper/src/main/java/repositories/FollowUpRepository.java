@@ -12,6 +12,8 @@ import domain.FollowUp;
 @Repository
 public interface FollowUpRepository extends JpaRepository<FollowUp, Integer> {
 
-	@Query("select f from Followup f where f.article.id = ?1")
+	@Query("select f from FollowUp f where f.article.id = ?1")
 	Collection<FollowUp> findFollowUpsByArticle(int articleId);
+	@Query("select f from FollowUp f where f.article.creator.id = ?1")
+	Collection<FollowUp> findFollowUpsByUser(int userId);
 }

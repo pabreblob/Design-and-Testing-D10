@@ -46,6 +46,7 @@ public class ArticleService {
 		final User creator = this.userService.findByPrincipal();
 		final Article res = this.createArticle();
 		res.setCreator(creator);
+		res.setMarked(false);
 		return res;
 	}
 	public Article save(final Article article) {
@@ -99,6 +100,10 @@ public class ArticleService {
 	// Other business methods -------------------------------------------------
 	public Collection<Article> findArticlesByNewspaper(final int newspaperId) {
 		final Collection<Article> res = this.articleRepository.findArticlesByNewspaper(newspaperId);
+		return res;
+	}
+	public Collection<Article> findPublishedArticlesByUser(final int userId) {
+		final Collection<Article> res = this.articleRepository.findPublishedArticlesByUser(userId);
 		return res;
 	}
 }
