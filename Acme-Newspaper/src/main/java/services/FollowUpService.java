@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.FollowUpRepository;
-import security.Authority;
-import domain.Actor;
 import domain.Article;
 import domain.FollowUp;
 import domain.TabooWord;
@@ -71,8 +69,6 @@ public class FollowUpService {
 		assert followUp != null;
 		assert followUp.getId() != 0;
 		Assert.isTrue(this.followUpRepository.findOne(followUp.getId()) != null);
-		final Actor actor = this.actorService.findByPrincipal();
-		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(Authority.ADMIN));
 		this.followUpRepository.delete(followUp.getId());
 
 	}

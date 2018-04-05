@@ -11,8 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ArticleRepository;
-import security.Authority;
-import domain.Actor;
 import domain.Article;
 import domain.FollowUp;
 import domain.TabooWord;
@@ -48,7 +46,7 @@ public class ArticleService {
 
 	public Article createArticle() {
 		final User creator = this.userService.findByPrincipal();
-		final Article res = this.createArticle();
+		final Article res = new Article();
 		res.setCreator(creator);
 		res.setMarked(false);
 		res.setMoment(null);
@@ -59,7 +57,7 @@ public class ArticleService {
 		Article res;
 		final User user = this.userService.findByPrincipal();
 		Assert.isTrue(article.getCreator().equals(user));
-		Assert.isTrue(!this.findOne(article.getId()).isFinalMode());
+
 		final Collection<TabooWord> tw = this.tabooWordService.findAll();
 		boolean taboow = false;
 		for (final TabooWord word : tw) {
@@ -78,9 +76,7 @@ public class ArticleService {
 		assert article != null;
 		assert article.getId() != 0;
 		Assert.isTrue(this.articleRepository.findOne(article.getId()) != null);
-		final Actor actor = this.actorService.findByPrincipal();
-		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(Authority.ADMIN));
-		final Collection<FollowUp> followups = this.followUpService.findFollowupsByArticle(article.getId());
+		final Collection<FollowUp> followups = this.followUpService.findFollowUpsByArticle(article.getId());
 		for (final FollowUp f : followups)
 			this.followUpService.delete(f);
 		this.articleRepository.delete(article.getId());
@@ -133,6 +129,10 @@ public class ArticleService {
 	}
 	public Collection<Article> findMarkedArticlesByUser() {
 		final Collection<Article> res = this.articleRepository.findMarkedArticles();
+		return res;
+	}
+	public Collection<Article> findEditableArticlesByUser() {
+		final Collection<Article> res = this.articleRepository.findEditableArticlesByUser(this.userService.findByPrincipal().getId());
 		return res;
 	}
 }

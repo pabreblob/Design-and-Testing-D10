@@ -18,4 +18,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	Collection<Article> findPublishedArticlesByUser(int userId);
 	@Query("select a from Article a where a.marked =true")
 	Collection<Article> findMarkedArticles();
+	@Query("select a from Article a where a.creator.id = ?1 and a.finalMode=false")
+	Collection<Article> findEditableArticlesByUser(int userId);
 }
