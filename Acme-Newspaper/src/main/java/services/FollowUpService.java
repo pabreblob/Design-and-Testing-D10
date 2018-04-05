@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 import repositories.FollowUpRepository;
 import security.Authority;
 import domain.Actor;
+import domain.Article;
 import domain.FollowUp;
 import domain.TabooWord;
 import domain.User;
@@ -39,10 +40,11 @@ public class FollowUpService {
 	}
 	// Simple CRUD methods ----------------------------------------------------
 
-	public FollowUp createFollowUp() {
+	public FollowUp createFollowUp(final Article a) {
 		FollowUp res;
 		res = new FollowUp();
 		res.setMarked(false);
+		res.setArticle(a);
 		return res;
 	}
 	public FollowUp save(final FollowUp followUp) {

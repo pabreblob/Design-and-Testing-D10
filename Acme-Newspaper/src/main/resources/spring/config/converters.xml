@@ -28,6 +28,12 @@
 		<bean class="converters.StringToAdminConverter" />
 		<bean class="converters.AuthorityToStringConverter"/>
 		<bean class="converters.StringToAuthorityConverter" />
+		<bean class="converters.ActorToStringConverter"/>
+		<bean class="converters.StringToActorConverter" />
+		<bean class="converters.ArticleToStringConverter"/>
+		<bean class="converters.StringToArticleConverter" />
+		<bean class="converters.FollowUpToStringConverter"/>
+		<bean class="converters.StringToFollowUpConverter" />
 				
 	</util:list>
 	

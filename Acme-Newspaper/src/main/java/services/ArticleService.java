@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ArticleRepository;
 import security.Authority;
@@ -34,6 +36,8 @@ public class ArticleService {
 	private ActorService		actorService;
 	@Autowired
 	private FollowUpService		followUpService;
+	@Autowired
+	private Validator			validator;
 
 
 	// Constructors -----------------------------------------------------------
@@ -47,6 +51,7 @@ public class ArticleService {
 		final Article res = this.createArticle();
 		res.setCreator(creator);
 		res.setMarked(false);
+		res.setMoment(null);
 		return res;
 	}
 	public Article save(final Article article) {
@@ -54,7 +59,7 @@ public class ArticleService {
 		Article res;
 		final User user = this.userService.findByPrincipal();
 		Assert.isTrue(article.getCreator().equals(user));
-		Assert.isTrue(!article.isFinalMode());
+		Assert.isTrue(!this.findOne(article.getId()).isFinalMode());
 		final Collection<TabooWord> tw = this.tabooWordService.findAll();
 		boolean taboow = false;
 		for (final TabooWord word : tw) {
@@ -105,5 +110,25 @@ public class ArticleService {
 	public Collection<Article> findPublishedArticlesByUser(final int userId) {
 		final Collection<Article> res = this.articleRepository.findPublishedArticlesByUser(userId);
 		return res;
+	}
+	public Article reconstruct(final Article article, final BindingResult binding) {
+		Article result;
+		if (article.getId() == 0) {
+			result = article;
+			final User creator = this.userService.findByPrincipal();
+			result.setCreator(creator);
+			result.setMarked(false);
+			result.setMoment(null);
+		} else {
+			result = this.articleRepository.findOne(article.getId());
+			result.setTitle(article.getTitle());
+			result.setSummary(article.getSummary());
+			result.setBody(article.getBody());
+			result.setFinalMode(article.isFinalMode());
+			result.setPictureUrls(article.getPictureUrls());
+			result.setNewspaper(article.getNewspaper());
+		}
+		this.validator.validate(result, binding);
+		return result;
 	}
 }
