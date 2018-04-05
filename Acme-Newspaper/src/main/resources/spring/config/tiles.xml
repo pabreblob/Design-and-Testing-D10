@@ -29,6 +29,7 @@
 		
 		<value>/views/user/tiles.xml</value>
 		<value>/views/newspaper/tiles.xml</value>
+		<value>/views/subscription/tiles.xml</value>
 		
 	</util:list>
 

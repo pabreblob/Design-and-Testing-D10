@@ -29,6 +29,7 @@
 		<value>/views/user/messages</value>
 		
 		<value>/views/newspaper/messages</value>
+		<value>/views/subscription/messages</value>
 	</util:list>
 
 </beans>

@@ -57,7 +57,7 @@
 	<jstl:if test="${subscribed == true}">
 	<display:column>
 
-			<a href="article/user/display.do?articleId=${a.id}"> <spring:message
+			<a href="article/customer/display.do?articleId=${a.id}"> <spring:message
 					code="newspaper.display" />
 			</a>
 	</display:column>
@@ -66,12 +66,30 @@
 	
 	<jstl:if test="${customerLogged == false}">
 	<jstl:if test="${somethingLogged == true}">
+	<security:authorize access="hasRole('ADMIN')">
+	<display:column>
+
+			<a href="article/admin/display.do?articleId=${a.id}"> <spring:message
+					code="newspaper.display" />
+			</a>
+	</display:column>
+	</security:authorize>
+	<security:authorize access="hasRole('USER')">
 	<display:column>
 
 			<a href="article/user/display.do?articleId=${a.id}"> <spring:message
 					code="newspaper.display" />
 			</a>
 	</display:column>
+	</security:authorize>
+	<security:authorize access="!isAuthenticated()">
+	<display:column>
+
+			<a href="article/display.do?articleId=${a.id}"> <spring:message
+					code="newspaper.display" />
+			</a>
+	</display:column>
+	</security:authorize>
 	</jstl:if>
 	</jstl:if>
 </display:table>
