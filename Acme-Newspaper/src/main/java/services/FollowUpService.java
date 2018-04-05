@@ -102,7 +102,7 @@ public class FollowUpService {
 		return res;
 	}
 	public Collection<FollowUp> findMarkedFollowUpsByUser() {
-		final Collection<FollowUps> res = this.followUpRepository.findMarkedFollowUps();
+		final Collection<FollowUp> res = this.followUpRepository.findMarkedFollowUps();
 		return res;
 	}
 }
