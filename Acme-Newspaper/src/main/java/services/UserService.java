@@ -10,6 +10,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.UserRepository;
@@ -18,6 +19,7 @@ import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
 import domain.User;
+import forms.UserForm;
 
 @Service
 @Transactional
@@ -98,6 +100,40 @@ public class UserService {
 	public User findByPrincipal() {
 		final UserAccount u = LoginService.getPrincipal();
 		final User res = this.userRepository.findUserByUserAccountId(u.getId());
+		return res;
+	}
+
+	public void follow(final User follower, final User followed) {
+		Assert.notNull(follower);
+		Assert.notNull(followed);
+		Assert.isTrue(!follower.getFollowing().contains(followed));
+		Assert.isTrue(!followed.getFollowers().contains(follower));
+
+		follower.getFollowing().add(followed);
+		followed.getFollowers().add(follower);
+	}
+
+	public void unfollow(final User follower, final User followed) {
+		Assert.notNull(follower);
+		Assert.notNull(followed);
+		Assert.isTrue(!follower.getFollowing().contains(followed));
+		Assert.isTrue(!followed.getFollowers().contains(follower));
+
+		follower.getFollowing().remove(followed);
+		followed.getFollowers().remove(follower);
+	}
+
+	public User reconstruct(final UserForm userForm, final BindingResult binding) {
+		final User res = this.create();
+		res.setName(userForm.getName());
+		res.setSurname(userForm.getSurname());
+		res.setAddress(userForm.getAddress());
+		res.setPhone(userForm.getPhone());
+		res.setEmail(userForm.getEmail());
+		res.getUserAccount().setUsername(userForm.getUserAccount().getUsername());
+		res.getUserAccount().setPassword(userForm.getUserAccount().getPassword());
+
+		this.validator.validate(res, binding);
 		return res;
 	}
 
