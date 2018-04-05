@@ -108,6 +108,9 @@ public class UserService {
 		Assert.notNull(followed);
 		Assert.isTrue(!follower.getFollowing().contains(followed));
 		Assert.isTrue(!followed.getFollowers().contains(follower));
+		Assert.isTrue(follower.getId() != followed.getId());
+		Assert.isTrue(follower.getId() != 0);
+		Assert.isTrue(followed.getId() != 0);
 
 		follower.getFollowing().add(followed);
 		followed.getFollowers().add(follower);
@@ -118,6 +121,9 @@ public class UserService {
 		Assert.notNull(followed);
 		Assert.isTrue(follower.getFollowing().contains(followed));
 		Assert.isTrue(followed.getFollowers().contains(follower));
+		Assert.isTrue(follower.getId() != followed.getId());
+		Assert.isTrue(follower.getId() != 0);
+		Assert.isTrue(followed.getId() != 0);
 
 		follower.getFollowing().remove(followed);
 		followed.getFollowers().remove(follower);

@@ -52,4 +52,17 @@ public class UserUserController extends AbstractController {
 		}
 		return result;
 	}
+
+	@RequestMapping(value = "follow", method = RequestMethod.GET)
+	public ModelAndView follow(@RequestParam final int userId) {
+		ModelAndView result;
+		try {
+			final User user = this.userService.findOne(userId);
+			this.userService.follow(this.userService.findByPrincipal(), user);
+			result = new ModelAndView("redirect:/user/user/following.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/user/user/following.do");
+		}
+		return result;
+	}
 }
