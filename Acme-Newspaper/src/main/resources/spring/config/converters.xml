@@ -40,6 +40,13 @@
 		<bean class="converters.StringToChirpConverter" />
 		<bean class="converters.TabooWordToStringConverter"/>
 		<bean class="converters.StringToTabooWordConverter" />
+		
+		<bean class="converters.StringToNewspaperConverter" />
+		<bean class="converters.NewspaperToStringConverter" />
+		<bean class="converters.StringToCreditCardConverter" />
+		<bean class="converters.CreditCardToStringConverter" />
+		<bean class="converters.StringToSubscriptionConverter" />
+		<bean class="converters.SubscriptionToStringConverter" />
 				
 	</util:list>
 	
