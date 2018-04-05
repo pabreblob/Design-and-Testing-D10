@@ -56,6 +56,7 @@
 		<security:intercept-url pattern="/user/list.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/create.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/user/save.do" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/user/user/**" access="hasRole('USER')" /> 
 					
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
