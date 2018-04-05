@@ -1,0 +1,6 @@
+- Descargar JMeter: https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-2.9.zip
+- Extraer a alguna carpeta, por ejemplo, C:\Program Files\Apache Software Foundation\apache-jmeter-2.9
+- Desde consola de comandos, ejecutar:
+   cd C:\Program Files\Apache Software Foundation\apache-jmeter-2.9\bin
+   java -jar ApacheJMeter.jar
+- Disfrutar
