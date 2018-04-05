@@ -15,6 +15,7 @@ import security.LoginService;
 import domain.Article;
 import domain.Newspaper;
 import domain.Subscription;
+import domain.TabooWord;
 
 @Service
 @Transactional
@@ -30,7 +31,10 @@ public class NewspaperService {
 	private ArticleService		articleService;
 
 	@Autowired
-	SubscriptionService			subscriptionService;
+	private SubscriptionService	subscriptionService;
+
+	@Autowired
+	private TabooWordService	tabooWordService;
 
 
 	public Newspaper create() {
@@ -52,7 +56,15 @@ public class NewspaperService {
 			Assert.isTrue(this.findOne(newspaper.getId()).getCreator().equals(this.userService.findByPrincipal()));
 		Assert.isNull(newspaper.getPublicationDate());
 
-		//Comprobar si tiene palabras de spam y ponerlo a sospechoso
+		final Collection<TabooWord> tw = this.tabooWordService.findAll();
+		boolean taboow = false;
+		for (final TabooWord word : tw) {
+			taboow = newspaper.getTitle().toLowerCase().matches(".*\\b" + word.getWord() + "\\b.*");
+			taboow |= newspaper.getDescription().toLowerCase().matches(".*\\b" + word.getWord() + "\\b.*");
+			if (taboow)
+				break;
+		}
+		newspaper.setMarked(taboow);
 		final Newspaper saved = this.newspaperRepository.save(newspaper);
 		return saved;
 	}
