@@ -21,4 +21,11 @@
 				code="user.display" />
 		</a>
 	</display:column>
+	<jstl:if test="${unfollow}">
+		<display:column>
+			<a href="user/unfollow.do?userId=${row.id}"> <spring:message
+					code="user.unfollow" />
+			</a>
+		</display:column>
+	</jstl:if>
 </display:table>
