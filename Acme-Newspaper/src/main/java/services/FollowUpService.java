@@ -101,4 +101,8 @@ public class FollowUpService {
 		final Collection<FollowUp> res = this.followUpRepository.findFollowUpsByUser(userId);
 		return res;
 	}
+	public Collection<FollowUp> findMarkedFollowUpsByUser() {
+		final Collection<FollowUps> res = this.followUpRepository.findMarkedFollowUps();
+		return res;
+	}
 }

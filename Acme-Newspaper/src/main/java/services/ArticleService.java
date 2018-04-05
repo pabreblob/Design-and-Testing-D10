@@ -131,4 +131,8 @@ public class ArticleService {
 		this.validator.validate(result, binding);
 		return result;
 	}
+	public Collection<Article> findMarkedArticlesByUser() {
+		final Collection<Article> res = this.articleRepository.findMarkedArticles();
+		return res;
+	}
 }

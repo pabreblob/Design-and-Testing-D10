@@ -397,10 +397,20 @@
 		<property name="publicationDate" value="2017/02/20 23:00" />
 		<property name="description" value="Sex" />
 		<property name="pictureUrl" value="http://www.placeholder.com" />
-		<property name="price" value="0.0"/>
-		<property name="free" value="true" />
+		<property name="price" value="20.0"/>
+		<property name="free" value="false" />
 		<property name="marked" value="true" />
 		<property name="creator"><ref bean="User3"></ref></property>
+	</bean>
+	<bean id="Newspaper9" class="domain.Newspaper">
+		<property name="title" value="newspaper1" />
+		<property name="publicationDate" value="2017/02/20 23:00" />
+		<property name="description" value="This is newspaper1" />
+		<property name="pictureUrl" value="http://www.placeholder.com" />
+		<property name="price" value="0.0"/>
+		<property name="free" value="true" />
+		<property name="marked" value="false" />
+		<property name="creator"><ref bean="User1"></ref></property>
 	</bean>
 	<bean id="Subscription1" class="domain.Subscription">
 		<property name="creditCard"><bean class="domain.CreditCard">
@@ -435,7 +445,7 @@
 					<property name="expYear" value="20" />
 					<property name="cvv" value="136" />
 				</bean></property>
-		<property name="newspaper" ><ref bean="Newspaper6"></ref></property>
+		<property name="newspaper" ><ref bean="Newspaper8"></ref></property>
 		<property name="customer" ><ref bean="Customer2"></ref></property>
 	</bean>
 	<bean id="Article1" class="domain.Article">
@@ -631,6 +641,21 @@
 		<property name="finalMode" value="false" />
 		<property name="marked" value="false" />
 		<property name="newspaper" ><ref bean="Newspaper1"></ref></property>
+		<property name="creator" ><ref bean="User3"></ref></property>
+	</bean>
+	<bean id="Article14" class="domain.Article">
+		<property name="title" value="article14" />
+		<property name="moment"><null/></property>
+		<property name="summary" value="This is the summary of the article" />
+		<property name="body" value="This is the body of the article" />
+		<property name="pictureUrls">
+		<list>
+		
+		</list>
+		</property>
+		<property name="finalMode" value="false" />
+		<property name="marked" value="false" />
+		<property name="newspaper" ><ref bean="Newspaper9"></ref></property>
 		<property name="creator" ><ref bean="User3"></ref></property>
 	</bean>
 	<bean id="FollowUp2" class="domain.FollowUp">

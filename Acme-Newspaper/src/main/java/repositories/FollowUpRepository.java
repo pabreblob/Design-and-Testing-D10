@@ -16,4 +16,6 @@ public interface FollowUpRepository extends JpaRepository<FollowUp, Integer> {
 	Collection<FollowUp> findFollowUpsByArticle(int articleId);
 	@Query("select f from FollowUp f where f.article.creator.id = ?1")
 	Collection<FollowUp> findFollowUpsByUser(int userId);
+	@Query("select f from FollowUp f where f.marked =true")
+	Collection<FollowUp> findMarkedFollowUps();
 }
