@@ -100,7 +100,8 @@ public class UserController extends AbstractController {
 		if (userId == null && principal == null)
 			result = new ModelAndView("redirect:/welcome/index.do");
 		else {
-
+			if (userId != null && this.userService.findOne(userId) == null)
+				return new ModelAndView("redirect:/welcome/index.do");
 			result = new ModelAndView("user/display");
 
 			if (userId != null && principal == null) {
@@ -114,10 +115,13 @@ public class UserController extends AbstractController {
 			} else {
 				final User u = this.userService.findOne(userId);
 				result.addObject("user", u);
-				if (principal.getFollowing().contains(u))
-					result.addObject("following", true);
-				else
-					result.addObject("following", false);
+				if (userId != principal.getId()) {
+					if (principal.getFollowing().contains(u))
+						result.addObject("following", true);
+					else
+						result.addObject("following", false);
+				} else
+					result.addObject("following", null);
 			}
 		}
 		return result;
