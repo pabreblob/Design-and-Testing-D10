@@ -26,5 +26,5 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	Collection<Newspaper> findMarkedNewspaper();
 	//Busqueda por keyword
 	@Query("select n from Newspaper n where (n.title like concat('%',?1,'%')or n.description like concat('%',?1,'%')) and n.publicationDate != null")
-	Collection<Newspaper> findTripsByKeyword(String keyword);
+	Collection<Newspaper> findNewspapersByKeyword(String keyword);
 }
