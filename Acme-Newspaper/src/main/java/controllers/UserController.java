@@ -105,9 +105,11 @@ public class UserController extends AbstractController {
 
 			if (userId != null && principal == null) {
 				result.addObject("user", this.userService.findOne(userId));
+				result.addObject("following", null);
 				return result;
 			} else if (userId == null && principal != null) {
 				result.addObject("user", principal);
+				result.addObject("following", null);
 				return result;
 			} else {
 				final User u = this.userService.findOne(userId);

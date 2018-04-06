@@ -46,10 +46,12 @@
 	<jstl:out value="${user.email}" />
 </p>
 <security:authorize access="hasRole('USER')">
+	<jstl:if test="${following != null}">
 	<jstl:if test="${following}">
 		<a href="user/user/unfollow.do?userId=${user.id}"><spring:message code="user.unfollow"/></a>
 	</jstl:if>
 	<jstl:if test="${not following}">
 		<a href="user/user/follow.do?userId=${user.id}"><spring:message code="user.follow"/></a>
+	</jstl:if>
 	</jstl:if>
 </security:authorize>
