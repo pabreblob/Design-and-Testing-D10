@@ -140,7 +140,7 @@ public class NewspaperController extends AbstractController {
 	public ModelAndView searchList(final HttpServletRequest request) {
 		ModelAndView res;
 		final String keyword = request.getParameter("keyword");
-		final Collection<Newspaper> newspapers = this.newspaperService.findTripsByKeyword(keyword);
+		final Collection<Newspaper> newspapers = this.newspaperService.findNewspapersByKeyword(keyword);
 		res = new ModelAndView("newspaper/list");
 		res.addObject("newspapers", newspapers);
 		res.addObject("requestURI", "newspaper/list-search.do");

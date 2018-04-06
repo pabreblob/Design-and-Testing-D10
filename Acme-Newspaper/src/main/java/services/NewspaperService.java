@@ -112,7 +112,7 @@ public class NewspaperService {
 		return this.newspaperRepository.findNewspaperCreatedByUserAccountId(LoginService.getPrincipal().getId());
 	}
 
-	public Collection<Newspaper> findTripsByKeyword(final String keyword) {
-		return this.newspaperRepository.findTripsByKeyword(keyword);
+	public Collection<Newspaper> findNewspapersByKeyword(final String keyword) {
+		return this.newspaperRepository.findNewspapersByKeyword(keyword);
 	}
 }
