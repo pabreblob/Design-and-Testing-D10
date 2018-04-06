@@ -403,9 +403,9 @@
 		<property name="creator"><ref bean="User3"></ref></property>
 	</bean>
 	<bean id="Newspaper9" class="domain.Newspaper">
-		<property name="title" value="newspaper1" />
+		<property name="title" value="newspape9" />
 		<property name="publicationDate" value="2017/02/20 23:00" />
-		<property name="description" value="This is newspaper1" />
+		<property name="description" value="This is newspaper9" />
 		<property name="pictureUrl" value="http://www.placeholder.com" />
 		<property name="price" value="0.0"/>
 		<property name="free" value="true" />
@@ -433,7 +433,7 @@
 					<property name="expYear" value="18" />
 					<property name="cvv" value="156" />
 				</bean></property>
-		<property name="newspaper" ><ref bean="Newspaper6"></ref></property>
+		<property name="newspaper" ><ref bean="Newspaper8"></ref></property>
 		<property name="customer" ><ref bean="Customer1"></ref></property>
 	</bean>
 	<bean id="Subscription3" class="domain.Subscription">
