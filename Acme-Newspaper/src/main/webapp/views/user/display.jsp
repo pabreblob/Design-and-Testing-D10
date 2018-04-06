@@ -45,6 +45,24 @@
 	:
 	<jstl:out value="${user.email}" />
 </p>
+
+<h1>Chirps</h1>
+
+<display:table class="displaytag" name="chirps" id="row" requestURI="user/display.do" pagesize="20" defaultsort="3" defaultorder="descending">
+	
+	<spring:message code="welcome.chirp.title" var="titleHeader" />
+	<display:column property="title" title="${titleHeader}" />
+
+	<spring:message code="welcome.chirp.description" var="descHeader" />
+	<display:column property="description" title="${descHeader}" />
+	
+	<spring:message code="welcome.chirp.moment" var="momentHeader" />
+	<spring:message code="welcome.chirp.format" var="dateFormat" />
+	<display:column title="${momentHeader}">
+		<fmt:formatDate value="${row.moment}" pattern="${dateFormat}"/>
+	</display:column>
+
+</display:table>
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${following != null}">
 	<jstl:if test="${following}">

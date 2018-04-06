@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ChirpService;
 import services.UserService;
 import domain.User;
 import forms.UserForm;
@@ -20,7 +21,10 @@ import forms.UserForm;
 public class UserController extends AbstractController {
 
 	@Autowired
-	private UserService	userService;
+	private UserService		userService;
+
+	@Autowired
+	private ChirpService	chirpService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -106,15 +110,18 @@ public class UserController extends AbstractController {
 
 			if (userId != null && principal == null) {
 				result.addObject("user", this.userService.findOne(userId));
+				result.addObject("chirps", this.chirpService.findByCreatorId(userId));
 				result.addObject("following", null);
 				return result;
 			} else if (userId == null && principal != null) {
 				result.addObject("user", principal);
+				result.addObject("chirps", this.chirpService.findByCreatorId(principal.getId()));
 				result.addObject("following", null);
 				return result;
 			} else {
 				final User u = this.userService.findOne(userId);
 				result.addObject("user", u);
+				result.addObject("chirps", this.chirpService.findByCreatorId(userId));
 				if (userId != principal.getId()) {
 					if (principal.getFollowing().contains(u))
 						result.addObject("following", true);
