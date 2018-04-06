@@ -20,49 +20,120 @@
 <div>
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
+		
+		<!-- Lista de Users -->
+		<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.user.list" /></a></li>
+		
+		<!-- Acciones de Newspaper -->
+		<li><a class="fNiv"><spring:message code="master.page.newspaper" /></a>
+			<ul>
+				<li class="arrow"></li>
+				
+				<security:authorize access="isAnonymous()">
+					<!-- Acciones para todos los usuarios -->
+					<li><a href="newspaper/list.do"><spring:message code="master.page.newspaper.list" /></a></li>
+				</security:authorize>
+
+				
+				<security:authorize access="hasRole('USER')">
+				<!-- Acciones para los Users -->
+					<li><a href="newspaper/list.do"><spring:message code="master.page.newspaper.list" /></a></li>
+					<li><a href="newspaper/user/list.do"><spring:message code="master.page.user.newspaper.created" /></a></li>
+					<li><a href="newspaper/user/create.do"><spring:message code="master.page.user.newspaper.create" /></a></li>
+				</security:authorize>
+				
+				<security:authorize access="hasRole('ADMIN')">
+				<!-- Acciones para los Admin -->
+					<li><a href="newspaper/admin/list.do"><spring:message code="master.page.admin.newspaper.list" /></a></li>
+					<li><a href="newspaper/search.do"><spring:message code="master.page.newspaper.search" /></a></li>
+				</security:authorize>
+
+				
+				<security:authorize access="hasRole('CUSTOMER')">
+				<!-- Acciones para los Customer -->
+					<li><a href="newspaper/list.do"><spring:message code="master.page.newspaper.list" /></a></li>
+					<li><a href="newspaper/customer/list-suscribed.do"><spring:message code="master.page.customer.newspaper.subscribed" /></a></li>
+				</security:authorize> 	
+										
+				<li><a href="newspaper/search.do"><spring:message code="master.page.newspaper.search" /></a></li>
+			</ul>
+		</li>
+		
+		<!-- Acciones de Article -->
+		<li><a class="fNiv"><spring:message code="master.page.article" /></a>
+			<ul>
+				<li class="arrow"></li>
+				
+				<!-- Acciones para todos los usuarios -->
+				<li><a href="article/search.do"><spring:message code="master.page.article.search"/></a>
+				
+				<security:authorize access="hasRole('USER')">
+				<!-- Acciones para los User -->
+					<li><a href="article/user/list-editable.do"><spring:message code="master.page.article.user.editable" /></a></li>
+					<li><a href="article/user/create.do"><spring:message code="master.page.article.user.create" /></a></li>
+				</security:authorize>
+				
+			</ul>
+		</li>
+		
 		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
+		<!-- Acciones para Admins -->
+			<li><a class="fNiv"><spring:message	code="master.page.admin" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
+					<li><a href="admin/display.do"><spring:message code="master.page.profile.display" /></a></li>
+					<li><a href="admin/admin/dashboard.do"><spring:message code="master.page.admin.dashboard" /></a></li>
+					<li><a href="newspaper/admin/list-marked.do"><spring:message code="master.page.admin.newspaper.marked" /></a></li>
+					<li><a href="article/admin/list-marked.do"><spring:message code="master.page.admin.article.marked" /></a></li>
+					<li><a href="followup/admin/list-marked.do"><spring:message code="master.page.admin.followup.marked" /></a></li>
+					<li><a href="chirp/admin/list-marked.do"><spring:message code="master.page.admin.chirp.marked" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
 		
-		<security:authorize access="hasRole('CUSTOMER')">
+	<security:authorize access="hasRole('CUSTOMER')">
+			<!-- Acciones para Customers -->
 			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
+					<li><a href="customer/display.do"><spring:message code="master.page.profile.display" /></a></li>
+				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('USER')">
+		<!-- Acciones para Users -->
+			<li><a class="fNiv"><spring:message code="master.page.user"/></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="user/display.do"><spring:message code="master.page.profile.display" /></a></li>
+					<li><a href="user/user/followers.do"><spring:message code="master.page.user.followers" /></a></li>
+					<li><a href="user/user/following.do"><spring:message code="master.page.user.following" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
-		</security:authorize>
-		
-		<security:authorize access="isAuthenticated()">
-			<li>
-				<a class="fNiv"> 
-					<spring:message code="master.page.profile" /> 
-			        (<security:authentication property="principal.username" />)
-				</a>
+			<li><a class="fNiv"><spring:message code="master.page.access"/></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
-					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
+					<li><a href="security/login.do"><spring:message code="master.page.login" /></a></li>
+					<li><a href="user/create.do"><spring:message code="master.page.user.register" /></a></li>
+					<li><a href="customer/create.do"><spring:message code="master.page.customer.register" /></a></li>
 				</ul>
 			</li>
+			
 		</security:authorize>
+			
+		<security:authorize access="isAuthenticated()">
+			<li><a class="fNiv" href="j_spring_security_logout"><spring:message code="master.page.logout" /></a></li>
+		</security:authorize>
+		
+		<!-- Cambio de idioma -->
+		<li id="rightB">
+			<a class="fNiv" href="<spring:message code="master.page.language.url"/>"><spring:message code="master.page.language"/></a>
+		</li>
 	</ul>
 </div>
 
-<div>
-	<a href="?language=en">en</a> | <a href="?language=es">es</a>
-</div>
 
