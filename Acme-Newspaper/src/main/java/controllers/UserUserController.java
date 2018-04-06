@@ -27,6 +27,7 @@ public class UserUserController extends AbstractController {
 		final Collection<User> followers = this.userService.findByPrincipal().getFollowers();
 		result = new ModelAndView("user/followers");
 		result.addObject("users", followers);
+		result.addObject("requestURI", "user/user/followers.do");
 		return result;
 	}
 
@@ -37,6 +38,7 @@ public class UserUserController extends AbstractController {
 		result = new ModelAndView("user/following");
 		result.addObject("users", following);
 		result.addObject("unfollow", true);
+		result.addObject("requestURI", "user/user/following.do");
 		return result;
 	}
 

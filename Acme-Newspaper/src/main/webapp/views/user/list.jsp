@@ -11,7 +11,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="users" requestURI="user/list.do" id="row">
+	name="users" requestURI="${requestURI}" id="row">
 	<spring:message code="user.username" var="uNameHeader" />
 	<display:column property="userAccount.username" title="${uNameHeader}" />
 	<spring:message code="user.email" var="emailHeader" />

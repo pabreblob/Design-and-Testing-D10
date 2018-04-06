@@ -32,7 +32,7 @@ public class UserController extends AbstractController {
 
 		result = new ModelAndView("user/list");
 		result.addObject("users", users);
-
+		result.addObject("requestURI", "user/list.do");
 		return result;
 	}
 
