@@ -45,14 +45,12 @@
 				<security:authorize access="hasRole('ADMIN')">
 				<!-- Acciones para los Admin -->
 					<li><a href="newspaper/admin/list.do"><spring:message code="master.page.admin.newspaper.list" /></a></li>
-					<li><a href="newspaper/search.do"><spring:message code="master.page.newspaper.search" /></a></li>
 				</security:authorize>
 
 				
 				<security:authorize access="hasRole('CUSTOMER')">
 				<!-- Acciones para los Customer -->
 					<li><a href="newspaper/list.do"><spring:message code="master.page.newspaper.list" /></a></li>
-					<li><a href="newspaper/customer/list-suscribed.do"><spring:message code="master.page.customer.newspaper.subscribed" /></a></li>
 				</security:authorize> 	
 										
 				<li><a href="newspaper/search.do"><spring:message code="master.page.newspaper.search" /></a></li>
@@ -87,6 +85,7 @@
 					<li><a href="article/admin/list-marked.do"><spring:message code="master.page.admin.article.marked" /></a></li>
 					<li><a href="followup/admin/list-marked.do"><spring:message code="master.page.admin.followup.marked" /></a></li>
 					<li><a href="chirp/admin/list-marked.do"><spring:message code="master.page.admin.chirp.marked" /></a></li>
+					<li><a href="tabooword/admin/list.do"><spring:message code="master.page.admin.tabooword" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
