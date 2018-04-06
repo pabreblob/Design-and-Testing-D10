@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -90,25 +89,35 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int userId) {
-		Assert.isTrue(userId != 0);
-		final User u = this.userService.findOne(userId);
-		Assert.notNull(u);
-		final ModelAndView result = new ModelAndView("user/display");
-		result.addObject("user", u);
-
+	public ModelAndView display(@RequestParam(required = false) final Integer userId) {
+		final ModelAndView result;
 		User principal = null;
 		try {
 			principal = this.userService.findByPrincipal();
 		} catch (final Throwable oops) {
 		}
-		if (principal != null) {
-			if (!principal.getFollowing().contains(u))
-				result.addObject("following", false);
-			else
-				result.addObject("following", true);
-		} else
-			result.addObject("following", false);
+
+		if (userId == null && principal == null)
+			result = new ModelAndView("redirect:/welcome/index.do");
+		else {
+
+			result = new ModelAndView("user/display");
+
+			if (userId != null && principal == null) {
+				result.addObject("user", this.userService.findOne(userId));
+				return result;
+			} else if (userId == null && principal != null) {
+				result.addObject("user", principal);
+				return result;
+			} else {
+				final User u = this.userService.findOne(userId);
+				result.addObject("user", u);
+				if (principal.getFollowing().contains(u))
+					result.addObject("following", true);
+				else
+					result.addObject("following", false);
+			}
+		}
 		return result;
 	}
 }
