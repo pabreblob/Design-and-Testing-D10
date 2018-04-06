@@ -20,4 +20,7 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	Collection<Article> findMarkedArticles();
 	@Query("select a from Article a where a.creator.id = ?1 and a.finalMode=false")
 	Collection<Article> findEditableArticlesByUser(int userId);
+	@Query("select a from Article a where (a.title like concat('%',?1,'%')or a.summary like concat('%',?1,'%')or a.body like concat('%',?1,'%')) and a.moment != null")
+	Collection<Article> findArticlesByKeyword(String keyword);
+
 }

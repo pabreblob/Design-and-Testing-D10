@@ -32,10 +32,6 @@
 
 	<spring:message code="article.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" />
-	<spring:message code="article.moment" var="momentHeader" />
-	<display:column title="${momentHeader}" >	
-	<fmt:formatDate value="${row.moment}" pattern="${dateFormat}" />	
-	</display:column>
 	<spring:message code="article.summary" var="summaryHeader" />
 	<display:column property="summary" title="${summaryHeader}" />
 	<spring:message code="article.newspaper" var="newspaperHeader" />
@@ -54,6 +50,15 @@
 
 			<a href="article/admin/display.do?articleId=${a.id}"> <spring:message
 					code="article.display" />
+			</a>
+
+		</display:column>
+	</jstl:if>
+	<jstl:if test="${requestURI == 'article/list-search.do' }">
+		<display:column>
+
+			<a href="newspaper/display.do?newspaperId=${a.newspaper.id}"> <spring:message
+					code="article.newspaper.display" />
 			</a>
 
 		</display:column>

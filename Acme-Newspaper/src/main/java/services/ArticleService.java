@@ -135,4 +135,7 @@ public class ArticleService {
 		final Collection<Article> res = this.articleRepository.findEditableArticlesByUser(this.userService.findByPrincipal().getId());
 		return res;
 	}
+	public Collection<Article> findArticlesByKeyword(final String keyword) {
+		return this.articleRepository.findArticlesByKeyword(keyword);
+	}
 }

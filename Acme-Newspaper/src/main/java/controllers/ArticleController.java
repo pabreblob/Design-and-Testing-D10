@@ -2,7 +2,10 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,6 +42,23 @@ public class ArticleController extends AbstractController {
 		res.addObject("hasPictures", hasPictures);
 		res.addObject("requestURI", requestURI);
 
+		return res;
+	}
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public ModelAndView search() {
+		ModelAndView res;
+		res = new ModelAndView("article/search");
+		return res;
+	}
+
+	@RequestMapping(value = "/list-search", method = RequestMethod.GET)
+	public ModelAndView searchList(final HttpServletRequest request) {
+		ModelAndView res;
+		final String keyword = request.getParameter("keyword");
+		final Collection<Article> articles = this.articleService.findArticlesByKeyword(keyword);
+		res = new ModelAndView("article/list");
+		res.addObject("articles", articles);
+		res.addObject("requestURI", "article/list-search.do");
 		return res;
 	}
 
