@@ -39,7 +39,7 @@
 </p>
 </div>
 <jstl:if test="${hasPictures== true}">
-<spring:message code="article.pictures"/>:
+
 	<jstl:forEach var="picture" items="${pictures}">
 	<img src="<jstl:out value="${picture}"/>">
 	</jstl:forEach>

@@ -63,8 +63,7 @@ public class ArticleService {
 			if (taboow)
 				break;
 		}
-		if (taboow)
-			article.setMarked(true);
+		article.setMarked(taboow);
 		res = this.articleRepository.save(article);
 		return res;
 	}
