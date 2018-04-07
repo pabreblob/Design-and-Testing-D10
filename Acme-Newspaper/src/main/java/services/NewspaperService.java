@@ -112,6 +112,10 @@ public class NewspaperService {
 		return this.newspaperRepository.findNewspaperCreatedByUserAccountId(LoginService.getPrincipal().getId());
 	}
 
+	public Collection<Newspaper> findNewspaperCreatedByUserId(final int userId) {
+		return this.newspaperRepository.findNewspaperCreatedByUserAccountId(this.userService.findOne(userId).getUserAccount().getId());
+	}
+
 	public Collection<Newspaper> findNewspapersByKeyword(final String keyword) {
 		return this.newspaperRepository.findNewspapersByKeyword(keyword);
 	}
