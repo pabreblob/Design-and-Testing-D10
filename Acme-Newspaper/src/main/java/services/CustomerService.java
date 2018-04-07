@@ -10,6 +10,8 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CustomerRepository;
 import security.Authority;
@@ -17,6 +19,7 @@ import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
 import domain.Customer;
+import forms.UserForm;
 
 @Service
 @Transactional
@@ -27,6 +30,9 @@ public class CustomerService {
 
 	@Autowired
 	private UserAccountService	userAccountService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	public CustomerService() {
@@ -90,6 +96,20 @@ public class CustomerService {
 	public Customer findByPrincipal() {
 		final UserAccount u = LoginService.getPrincipal();
 		final Customer res = this.customerRepository.findCustomerByUserAccountId(u.getId());
+		return res;
+	}
+
+	public Customer reconstruct(final UserForm userForm, final BindingResult binding) {
+		final Customer res = this.create();
+		res.setName(userForm.getName());
+		res.setSurname(userForm.getSurname());
+		res.setAddress(userForm.getAddress());
+		res.setPhone(userForm.getPhone());
+		res.setEmail(userForm.getEmail());
+		res.getUserAccount().setUsername(userForm.getUserAccount().getUsername());
+		res.getUserAccount().setPassword(userForm.getUserAccount().getPassword());
+
+		this.validator.validate(res, binding);
 		return res;
 	}
 }

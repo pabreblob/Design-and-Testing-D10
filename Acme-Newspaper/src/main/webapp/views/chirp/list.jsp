@@ -10,7 +10,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<display:table class="displaytag" name="marked" id="row" requestURI="chirp/admin/list-marked.do" pagesize="20" defaultsort="4">
+<display:table class="displaytag" name="chirps" id="row" requestURI="chirp/admin/list.do" pagesize="20" defaultsort="4">
 	
 	<spring:message code="chirp.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" />
@@ -29,6 +29,6 @@
 		<fmt:formatDate value="${row.moment}" pattern="${dateFormat}"/>
 	</display:column>
 	
-	<display:column><a href="chirp/admin/delete-marked.do?chirpId=${row.id}"><spring:message code="chirp.delete"/></a></display:column>
+	<display:column><a href="chirp/admin/delete.do?chirpId=${row.id}"><spring:message code="chirp.delete"/></a></display:column>
 	
 </display:table>

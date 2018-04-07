@@ -24,9 +24,22 @@ public class ChirpAdminController extends AbstractController {
 	public ModelAndView listMarked() {
 		ModelAndView res;
 		final Collection<Chirp> marked = this.chirpService.findMarked();
+		final boolean listmarked = true;
 
 		res = new ModelAndView("chirp/list-marked");
 		res.addObject("marked", marked);
+		res.addObject("listmarked", listmarked);
+
+		return res;
+	}
+
+	@RequestMapping(value = "/list")
+	public ModelAndView list() {
+		ModelAndView res;
+		final Collection<Chirp> chirps = this.chirpService.findAll();
+
+		res = new ModelAndView("chirp/list");
+		res.addObject("chirps", chirps);
 
 		return res;
 	}
@@ -34,13 +47,24 @@ public class ChirpAdminController extends AbstractController {
 	@RequestMapping(value = "/delete")
 	public ModelAndView delete(@RequestParam final int chirpId) {
 		final Chirp c = this.chirpService.findOne(chirpId);
-		ModelAndView res;
-
+		final ModelAndView res = new ModelAndView("chirp/list");
 		try {
 			this.chirpService.delete(c);
-			res = new ModelAndView("chirp/list-marked");
+			res.addObject("chirps", this.chirpService.findAll());
 		} catch (final Throwable oops) {
-			res = new ModelAndView("chirp/list-marked");
+			res.addObject("message", "chirp.error");
+		}
+		return res;
+	}
+
+	@RequestMapping(value = "/delete-marked")
+	public ModelAndView deleteMarked(@RequestParam final int chirpId) {
+		final Chirp c = this.chirpService.findOne(chirpId);
+		final ModelAndView res = new ModelAndView("chirp/list-marked");
+		try {
+			this.chirpService.delete(c);
+			res.addObject("marked", this.chirpService.findMarked());
+		} catch (final Throwable oops) {
 			res.addObject("message", "chirp.error");
 		}
 		return res;

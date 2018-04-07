@@ -41,13 +41,7 @@
 					<li><a href="newspaper/user/list.do"><spring:message code="master.page.user.newspaper.created" /></a></li>
 					<li><a href="newspaper/user/create.do"><spring:message code="master.page.user.newspaper.create" /></a></li>
 				</security:authorize>
-				
-				<security:authorize access="hasRole('ADMIN')">
-				<!-- Acciones para los Admin -->
-					<li><a href="newspaper/admin/list.do"><spring:message code="master.page.admin.newspaper.list" /></a></li>
-				</security:authorize>
-
-				
+			
 				<security:authorize access="hasRole('CUSTOMER')">
 				<!-- Acciones para los Customer -->
 					<li><a href="newspaper/list.do"><spring:message code="master.page.newspaper.list" /></a></li>
@@ -88,14 +82,15 @@
 					<li><a href="tabooword/admin/list.do"><spring:message code="master.page.admin.tabooword" /></a></li>
 				</ul>
 			</li>
-		</security:authorize>
-		
-	<security:authorize access="hasRole('CUSTOMER')">
-			<!-- Acciones para Customers -->
-			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
+			
+			<!-- Listas de todo para los Admins -->
+			<li><a class="fNiv"><spring:message	code="master.page.admin.lists" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/display.do"><spring:message code="master.page.profile.display" /></a></li>
+					<li><a href="newspaper/admin/list.do"><spring:message code="master.page.admin.newspaper.list" /></a></li>
+					<li><a href="article/admin/list.do"><spring:message code="master.page.admin.article.list" /></a></li>
+					<li><a href="followup/admin/list-all.do"><spring:message code="master.page.admin.followup.list"/></a></li>
+					<li><a href="chirp/admin/list.do"><spring:message code="master.page.admin.chirp.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

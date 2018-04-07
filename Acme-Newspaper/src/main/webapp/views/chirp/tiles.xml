@@ -26,4 +26,9 @@
 		<put-attribute name="body" value="/views/chirp/list-marked.jsp" />
 	</definition>
 	
+	<definition name="chirp/list" extends="master.page">	
+		<put-attribute name="title" value="All Chirps" />
+		<put-attribute name="body" value="/views/chirp/list.jsp" />
+	</definition>
+	
 </tiles-definitions>
