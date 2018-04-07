@@ -39,19 +39,28 @@ public class NewspaperAdminController extends AbstractController {
 		newspapers = this.newspaperService.findMarkedNewspaper();
 		res = new ModelAndView("newspaper/list");
 		res.addObject("newspapers", newspapers);
-		res.addObject("requestURI", "newspaper/admin/list.do");
+		res.addObject("requestURI", "newspaper/admin/list-marked.do");
 		return res;
 	}
 
 	//	Delete
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int newspaperId) {
+	public ModelAndView delete(@RequestParam final int newspaperId, final String requestURI) {
 		ModelAndView res;
+		final String redirect1 = "redirect:list.do";
+		final String redirect2 = "redirect:list-marked.do";
+		System.out.println(requestURI);
 		try {
 			this.newspaperService.delete(newspaperId);
-			res = new ModelAndView("redirect:list.do");
+			if (requestURI.equals("newspaper/admin/list.do"))
+				res = new ModelAndView(redirect1);
+			else
+				res = new ModelAndView(redirect2);
 		} catch (final Exception e) {
-			res = new ModelAndView("newspaper/list");
+			if (requestURI == "newspaper/admin/list.do")
+				res = new ModelAndView(redirect1);
+			else
+				res = new ModelAndView(redirect2);
 			res.addObject("message", "newspaper.commit.error");
 		}
 		return res;
