@@ -43,22 +43,12 @@
 	<display:table name="articles" id="a" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">
 	
-
 	<spring:message code="newspaper.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}" />
-	
-	<spring:message code="article.writer" var="writerHeader" />
-	<display:column property="creator.name" title="${writerHeader}" />
-	
-	<spring:message code="article.summary" var="summaryHeader" />
-	<display:column property="summary" title="${summaryHeader}" />
-	
 	<jstl:if test="${customerLogged == true}">
 	<jstl:if test="${subscribed == true}">
-	<display:column>
+	<display:column  title="${titleHeader}" >
 
-			<a href="article/customer/display.do?articleId=${a.id}"> <spring:message
-					code="newspaper.display" />
+			<a href="article/customer/display.do?articleId=${a.id}"> <jstl:out value="${a.title}"></jstl:out>
 			</a>
 	</display:column>
 	</jstl:if>
@@ -67,31 +57,52 @@
 	<jstl:if test="${customerLogged == false}">
 	<jstl:if test="${somethingLogged == true}">
 	<security:authorize access="hasRole('ADMIN')">
-	<display:column>
+	<display:column  title="${titleHeader}" >
 
-			<a href="article/admin/display.do?articleId=${a.id}"> <spring:message
-					code="newspaper.display" />
+			<a href="article/admin/display.do?articleId=${a.id}"> <jstl:out value="${a.title}"></jstl:out>
 			</a>
 	</display:column>
 	</security:authorize>
 	<security:authorize access="hasRole('USER')">
-	<display:column>
+	<display:column title="${titleHeader}" >
 
-			<a href="article/user/display.do?articleId=${a.id}"> <spring:message
-					code="newspaper.display" />
+			<a href="article/user/display.do?articleId=${a.id}"> <jstl:out value="${a.title}"></jstl:out>
 			</a>
 	</display:column>
 	</security:authorize>
 	<security:authorize access="!isAuthenticated()">
-	<display:column>
+	<display:column  title="${titleHeader}" >
 
-			<a href="article/display.do?articleId=${a.id}"> <spring:message
-					code="newspaper.display" />
+			<a href="article/display.do?articleId=${a.id}"> <jstl:out value="${a.title}"></jstl:out>
 			</a>
 	</display:column>
 	</security:authorize>
 	</jstl:if>
 	</jstl:if>
+	
+	<jstl:if test="${customerLogged == false}">
+	<jstl:if test="${somethingLogged == false }">
+	<display:column property="title" title="${titleHeader}" />
+	</jstl:if>
+	</jstl:if>
+	
+	<jstl:if test="${needPay == true}">
+	<display:column property="title" title="${titleHeader}" />
+	</jstl:if>
+	
+	<spring:message code="article.writer" var="writerHeader" />
+	<display:column title="${writerHeader}" >
+
+			<a href="user/display.do?userId=${a.creator.id}"> <jstl:out value="${a.creator.name}"></jstl:out>
+			</a>
+	</display:column>
+	
+	
+	<spring:message code="article.summary" var="summaryHeader" />
+	<display:column property="summary" title="${summaryHeader}" />
+	
+	
+	
 </display:table>
 
 <jstl:if test="${needPay == true}">
