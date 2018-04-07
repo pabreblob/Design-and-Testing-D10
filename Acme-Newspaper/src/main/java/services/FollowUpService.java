@@ -2,11 +2,14 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.FollowUpRepository;
 import domain.Article;
@@ -26,10 +29,9 @@ public class FollowUpService {
 	private UserService			userService;
 	@Autowired
 	private TabooWordService	tabooWordService;
+
 	@Autowired
-	private ArticleService		newspaperService;
-	@Autowired
-	private ActorService		actorService;
+	private Validator			validator;
 
 
 	// Constructors -----------------------------------------------------------
@@ -62,6 +64,8 @@ public class FollowUpService {
 		}
 		if (taboow)
 			followUp.setMarked(true);
+		final Date publicationDate = new Date(System.currentTimeMillis() - 10000);
+		followUp.setMoment(publicationDate);
 		res = this.followUpRepository.save(followUp);
 		return res;
 	}
@@ -100,5 +104,16 @@ public class FollowUpService {
 	public Collection<FollowUp> findMarkedFollowUpsByUser() {
 		final Collection<FollowUp> res = this.followUpRepository.findMarkedFollowUps();
 		return res;
+	}
+	public FollowUp reconstruct(final FollowUp followUp, final BindingResult binding) {
+		FollowUp result;
+
+		result = followUp;
+		result.setMarked(false);
+		final Date publicationDate = new Date(System.currentTimeMillis() - 10000);
+		followUp.setMoment(publicationDate);
+
+		this.validator.validate(result, binding);
+		return result;
 	}
 }

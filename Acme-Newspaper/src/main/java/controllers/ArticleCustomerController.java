@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ArticleService;
+import services.FollowUpService;
 import services.SubscriptionService;
 import domain.Article;
 
@@ -24,6 +25,8 @@ public class ArticleCustomerController extends AbstractController {
 	ArticleService		articleService;
 	@Autowired
 	SubscriptionService	subscriptionService;
+	@Autowired
+	FollowUpService		followUpService;
 
 
 	//	Displaying
@@ -35,11 +38,13 @@ public class ArticleCustomerController extends AbstractController {
 		final String requestURI = "article/customer/display.do";
 		final List<String> pictures = new ArrayList<String>(article.getPictureUrls());
 		final boolean hasPictures = !pictures.isEmpty();
+		final boolean hasFollowUps = !this.followUpService.findFollowUpsByArticle(articleId).isEmpty();
 
 		res = new ModelAndView("article/display");
 		res.addObject("article", article);
 		res.addObject("pictures", pictures);
 		res.addObject("hasPictures", hasPictures);
+		res.addObject("hasFollowUps", hasFollowUps);
 		res.addObject("requestURI", requestURI);
 
 		return res;

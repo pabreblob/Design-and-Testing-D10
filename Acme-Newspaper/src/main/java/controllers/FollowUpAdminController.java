@@ -14,11 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ArticleService;
 import services.FollowUpService;
-import domain.Article;
+import domain.FollowUp;
 
 @Controller
-@RequestMapping("/article/admin")
-public class ArticleAdminController extends AbstractController {
+@RequestMapping("/followUp/admin")
+public class FollowUpAdminController extends AbstractController {
 
 	@Autowired
 	ArticleService	articleService;
@@ -28,16 +28,16 @@ public class ArticleAdminController extends AbstractController {
 
 	//	Displaying
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int articleId) {
+	public ModelAndView display(@RequestParam final int followUpId) {
 		final ModelAndView res;
-		final Article article = this.articleService.findOne(articleId);
-		final String requestURI = "article/admin/display.do";
-		final List<String> pictures = new ArrayList<String>(article.getPictureUrls());
+		final FollowUp followUp = this.followUpService.findOne(followUpId);
+		final String requestURI = "followUp/admin/display.do";
+		final List<String> pictures = new ArrayList<String>(followUp.getPictureUrls());
 		final boolean hasPictures = !pictures.isEmpty();
-		final boolean hasFollowUps = !this.followUpService.findFollowUpsByArticle(articleId).isEmpty();
-		res = new ModelAndView("article/display");
-		res.addObject("article", article);
-		res.addObject("hasFollowUps", hasFollowUps);
+
+		res = new ModelAndView("followUp/display");
+		res.addObject("followUp", followUp);
+
 		res.addObject("pictures", pictures);
 		res.addObject("hasPictures", hasPictures);
 		res.addObject("requestURI", requestURI);
@@ -48,34 +48,33 @@ public class ArticleAdminController extends AbstractController {
 	@RequestMapping(value = "/list-marked", method = RequestMethod.GET)
 	public ModelAndView listMarked() {
 		ModelAndView res;
-		final Collection<Article> articles = this.articleService.findMarkedArticlesByUser();
-		final String requestURI = "article/admin/list-marked.do";
-		res = new ModelAndView("article/list");
-		res.addObject("articles", articles);
+		final Collection<FollowUp> followUps = this.followUpService.findMarkedFollowUpsByUser();
+		final String requestURI = "followUp/admin/list-marked.do";
+		res = new ModelAndView("followUp/list");
+		res.addObject("followUps", followUps);
 		res.addObject("requestURI", requestURI);
 
 		return res;
 	}
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam final int articleId) {
 		ModelAndView res;
-		final Collection<Article> articles = this.articleService.findAll();
-		final String requestURI = "article/admin/list.do";
-		res = new ModelAndView("article/list");
-		res.addObject("articles", articles);
+		final Collection<FollowUp> followUps = this.followUpService.findFollowUpsByArticle(articleId);
+		final String requestURI = "followUp/admin/list.do";
+		res = new ModelAndView("followUp/list");
+		res.addObject("followUps", followUps);
 		res.addObject("requestURI", requestURI);
 
 		return res;
 	}
-
 	//	Deleting
 	@RequestMapping(value = "/delete")
-	public ModelAndView delete(@RequestParam final int articleId) {
+	public ModelAndView delete(@RequestParam final int followUpId) {
 		ModelAndView res;
-		final Article article = this.articleService.findOne(articleId);
+		final FollowUp followUp = this.followUpService.findOne(followUpId);
 
-		this.articleService.delete(article);
-		res = new ModelAndView("redirect:list.do");
+		this.followUpService.delete(followUp);
+		res = new ModelAndView("redirect:list.do?articleId=" + followUp.getArticle().getId());
 
 		return res;
 	}

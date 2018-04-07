@@ -19,18 +19,17 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="article/user/edit.do" modelAttribute="article">
+<form:form action="followUp/user/edit.do" modelAttribute="followUp">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<acme:select items="${newspapers}" itemLabel="title" code="article.newspaper" path="newspaper"/>
-	<acme:textbox code="article.title" path="title" /><br />
-	<acme:textarea code="article.summary" path="summary" /><br />
-	<acme:textarea code="article.body" path="body" /><br />
-	<spring:message code="article.pictures.placeholder" var="pictureplaceholder"/>
-	<acme:textbox code="article.pictures" path="pictureUrls" placeholder='${pictureplaceholder}'/><br />
-	<acme:checkbox code="article.final" path="finalMode"/><br />
-	<acme:submit name="save" code="article.save"  />
-	<acme:cancel code="article.cancel" url="/welcome/index.do" /><br />	
+	<form:hidden path="article" />
+	<acme:textbox code="followUp.title" path="title" /><br />
+	<acme:textarea code="followUp.summary" path="summary" /><br />
+	<acme:textarea code="followUp.body" path="body" /><br />
+	<spring:message code="followUp.pictures.placeholder" var="pictureplaceholder"/>
+	<acme:textbox code="followUp.pictures" path="pictureUrls" placeholder='${pictureplaceholder}' /><br />
+	<acme:submit name="save" code="followUp.save"  />
+	<acme:cancel code="followUp.cancel" url="article/user/list-published.do" /><br />	
 </form:form>
 
 

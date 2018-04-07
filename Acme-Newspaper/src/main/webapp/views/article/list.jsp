@@ -18,6 +18,9 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jstl:if test="${requestURI == 'article/user/list-published.do' }">
+<h1><spring:message code="article.followUp.list"/></h1>
+</jstl:if>
 <display:table name="articles" id="a" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">
 	<jstl:if test="${requestURI == 'article/user/list-editable.do' }">
@@ -45,7 +48,16 @@
 
 		</display:column>
 	</jstl:if>
-	<jstl:if test="${requestURI == 'article/admin/list-marked.do' }">
+	<jstl:if test="${requestURI == 'article/user/list-published.do' }">
+		<display:column>
+
+			<a href="followUp/user/create.do?articleId=${a.id}"> <spring:message
+					code="article.followUp.create" />
+			</a>
+
+		</display:column>
+	</jstl:if>
+	<security:authorize access="hasRole('ADMIN')">
 		<display:column>
 
 			<a href="article/admin/display.do?articleId=${a.id}"> <spring:message
@@ -53,7 +65,7 @@
 			</a>
 
 		</display:column>
-	</jstl:if>
+	</security:authorize>
 	<jstl:if test="${requestURI == 'article/list-search.do' }">
 		<display:column>
 
@@ -63,7 +75,7 @@
 
 		</display:column>
 	</jstl:if>
-	<jstl:if test="${requestURI == 'article/admin/list-marked.do' }">
+	<security:authorize access="hasRole('ADMIN')">
 		<display:column>
 
 			<a href="article/admin/delete.do?articleId=${a.id}"> <spring:message
@@ -71,7 +83,7 @@
 			</a>
 
 		</display:column>
-	</jstl:if>
+	</security:authorize>
 
 </display:table>
 

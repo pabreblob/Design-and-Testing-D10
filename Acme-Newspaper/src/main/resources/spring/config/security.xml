@@ -70,6 +70,10 @@
 		<security:intercept-url pattern="/admin/admin/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/chirp/admin/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/chirp/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/followUp/admin/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/followUp/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/followUp/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/followUp/**" access="permitAll" />
 		
 
 		

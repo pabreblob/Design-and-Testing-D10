@@ -19,11 +19,11 @@ import services.FollowUpService;
 import services.NewspaperService;
 import services.UserService;
 import domain.Article;
-import domain.Newspaper;
+import domain.FollowUp;
 
 @Controller
-@RequestMapping("/article/user")
-public class ArticleUserController extends AbstractController {
+@RequestMapping("/followUp/user")
+public class FollowUpUserController extends AbstractController {
 
 	@Autowired
 	ArticleService		articleService;
@@ -55,76 +55,56 @@ public class ArticleUserController extends AbstractController {
 
 		return res;
 	}
-	@RequestMapping(value = "/list-editable", method = RequestMethod.GET)
-	public ModelAndView listMarked() {
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list(@RequestParam final int articleId) {
 		ModelAndView res;
-		final Collection<Article> articles = this.articleService.findEditableArticlesByUser();
-		final String requestURI = "article/user/list-editable.do";
-		res = new ModelAndView("article/list");
-		res.addObject("articles", articles);
+		Assert.isTrue(this.articleService.findOne(articleId).getNewspaper().isFree() || this.articleService.findOne(articleId).getCreator().getId() == this.userService.findByPrincipal().getId());
+		final Collection<FollowUp> followUps = this.followUpService.findFollowUpsByArticle(articleId);
+		final String requestURI = "followUp/user/list.do";
+		res = new ModelAndView("followUp/list");
+		res.addObject("followUps", followUps);
 		res.addObject("requestURI", requestURI);
 
 		return res;
 	}
 	//Creating
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	public ModelAndView create(@RequestParam final int articleId) {
 		final ModelAndView res;
-		final Article a = this.articleService.createArticle();
-		res = this.createEditModelAndView(a);
+		final Article article = this.articleService.findOne(articleId);
+		Assert.isTrue(article.getCreator().getId() == this.userService.findByPrincipal().getId() && article.getMoment() != null);
+		final FollowUp f = this.followUpService.createFollowUp(article);
+		res = this.createEditModelAndView(f);
 
 		return res;
 	}
 	//	//Editing
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int articleId) {
-		ModelAndView res;
-		Article a;
-		a = this.articleService.findOne(articleId);
-		Assert.isTrue(a.getCreator().getId() == this.userService.findByPrincipal().getId());
-		Assert.isTrue(a.isFinalMode() == false);
-		res = this.createEditModelAndView(a);
-
-		return res;
-	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Article a, final BindingResult binding) {
+	public ModelAndView save(final FollowUp f, final BindingResult binding) {
 		ModelAndView res;
-		final Article article = this.articleService.reconstruct(a, binding);
+		Assert.isTrue(f.getArticle().getCreator().getId() == this.userService.findByPrincipal().getId() && f.getArticle().getMoment() != null);
+		final FollowUp followUp = this.followUpService.reconstruct(f, binding);
 		if (binding.hasErrors())
-			res = this.createEditModelAndView(article);
+			res = this.createEditModelAndView(followUp);
 		else
 			try {
-				this.articleService.save(article);
+				this.followUpService.save(followUp);
 				res = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(article, "article.commit.error");
+				res = this.createEditModelAndView(followUp, "followUp.commit.error");
 			}
-		return res;
-	}
-	@RequestMapping(value = "/list-published", method = RequestMethod.GET)
-	public ModelAndView listPublished() {
-		ModelAndView res;
-		final Collection<Article> articles = this.articleService.findPublishedArticlesByUser(this.userService.findByPrincipal().getId());
-		final String requestURI = "article/user/list-published.do";
-		res = new ModelAndView("article/list");
-		res.addObject("articles", articles);
-		res.addObject("requestURI", requestURI);
-
 		return res;
 	}
 
 	//Ancillary methods
-	protected ModelAndView createEditModelAndView(final Article a) {
-		return this.createEditModelAndView(a, null);
+	protected ModelAndView createEditModelAndView(final FollowUp f) {
+		return this.createEditModelAndView(f, null);
 	}
-	protected ModelAndView createEditModelAndView(final Article a, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final FollowUp f, final String messageCode) {
 		ModelAndView res;
-		res = new ModelAndView("article/edit");
-		final Collection<Newspaper> newspapers = this.newspaperService.findNotPublicatedNewspaper();
-		res.addObject("article", a);
-		res.addObject("newspapers", newspapers);
+		res = new ModelAndView("followUp/edit");
+		res.addObject("followUp", f);
 
 		return res;
 	}

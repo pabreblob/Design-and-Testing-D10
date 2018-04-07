@@ -24,13 +24,18 @@
 <div>
 <spring:message code="article.dateFormat2" var="dateFormat2" />
 <p>
-<spring:message code="article.moment"/>:<fmt:formatDate value="${aricle.moment}" pattern="${dateFormat2}" />
+<spring:message code="article.moment"/>:<fmt:formatDate value="${article.moment}" pattern="${dateFormat2}" />
 </p>
 </div>
 </jstl:if>
 <div>
 <p>
 <spring:message code="article.summary"/>:<jstl:out value="${article.summary}"/>
+</p>
+</div>
+<div>
+<p>
+<spring:message code="article.body"/>:<jstl:out value="${article.body}"/>
 </p>
 </div>
 <jstl:if test="${hasPictures== true}">
@@ -44,3 +49,33 @@
 <spring:message code="article.newspaper"/>:<jstl:out value="${article.newspaper.title}"/>
 </p>
 </div>
+<jstl:if test="${hasFollowUps}">
+	<security:authorize access="hasRole('ADMIN')">
+<div>
+<a href="followUp/admin/list.do?articleId=${article.id}">
+<spring:message	code="article.followUps" />
+</a>
+</div>
+</security:authorize>
+<security:authorize access="hasRole('USER')">
+<div>
+<a href="followUp/user/list.do?articleId=${article.id}">
+<spring:message	code="article.followUps" />
+</a>
+</div>
+</security:authorize>
+<security:authorize access="hasRole('CUSTOMER')">
+<div>
+<a href="followUp/customer/list.do?articleId=${article.id}">
+<spring:message	code="article.followUps" />
+</a>
+</div>
+</security:authorize>
+<security:authorize access="isAnonymous()">
+<div>
+<a href="followUp/list.do?articleId=${article.id}">
+<spring:message	code="article.followUps" />
+</a>
+</div>
+</security:authorize>
+	</jstl:if>

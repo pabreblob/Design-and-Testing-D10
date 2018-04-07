@@ -29,10 +29,6 @@ public class ArticleService {
 	@Autowired
 	private TabooWordService	tabooWordService;
 	@Autowired
-	private NewspaperService	newspaperService;
-	@Autowired
-	private ActorService		actorService;
-	@Autowired
 	private FollowUpService		followUpService;
 	@Autowired
 	private Validator			validator;
