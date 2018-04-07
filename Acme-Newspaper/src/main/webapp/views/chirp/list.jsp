@@ -10,7 +10,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<display:table class="displaytag" name="chirps" id="row" requestURI="chirp/admin/list.do" pagesize="20" defaultsort="4">
+<display:table class="displaytag" name="chirps" id="row" requestURI="chirp/admin/list.do" pagesize="20" defaultsort="4" defaultorder="descending">
 	
 	<spring:message code="chirp.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" />

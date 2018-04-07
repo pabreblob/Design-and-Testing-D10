@@ -63,6 +63,7 @@
 				<!-- Acciones para los User -->
 					<li><a href="article/user/list-editable.do"><spring:message code="master.page.article.user.editable" /></a></li>
 					<li><a href="article/user/create.do"><spring:message code="master.page.article.user.create" /></a></li>
+					<li><a href="article/user/list-published.do"><spring:message code="master.page.article.user.followup" /></a></li>
 				</security:authorize>
 				
 			</ul>
@@ -77,7 +78,7 @@
 					<li><a href="admin/admin/dashboard.do"><spring:message code="master.page.admin.dashboard" /></a></li>
 					<li><a href="newspaper/admin/list-marked.do"><spring:message code="master.page.admin.newspaper.marked" /></a></li>
 					<li><a href="article/admin/list-marked.do"><spring:message code="master.page.admin.article.marked" /></a></li>
-					<li><a href="followup/admin/list-marked.do"><spring:message code="master.page.admin.followup.marked" /></a></li>
+					<li><a href="followUp/admin/list-marked.do"><spring:message code="master.page.admin.followup.marked" /></a></li>
 					<li><a href="chirp/admin/list-marked.do"><spring:message code="master.page.admin.chirp.marked" /></a></li>
 					<li><a href="tabooword/admin/list.do"><spring:message code="master.page.admin.tabooword" /></a></li>
 				</ul>
@@ -89,7 +90,7 @@
 					<li class="arrow"></li>
 					<li><a href="newspaper/admin/list.do"><spring:message code="master.page.admin.newspaper.list" /></a></li>
 					<li><a href="article/admin/list.do"><spring:message code="master.page.admin.article.list" /></a></li>
-					<li><a href="followup/admin/list-all.do"><spring:message code="master.page.admin.followup.list"/></a></li>
+					<li><a href="followUp/admin/list-all.do"><spring:message code="master.page.admin.followup.list"/></a></li>
 					<li><a href="chirp/admin/list.do"><spring:message code="master.page.admin.chirp.list" /></a></li>
 				</ul>
 			</li>

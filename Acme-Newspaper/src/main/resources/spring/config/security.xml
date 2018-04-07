@@ -76,6 +76,7 @@
 		<security:intercept-url pattern="/followUp/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/followUp/customer/**" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/followUp/**" access="permitAll" />
+		<security:intercept-url pattern="/tabooword/admin/**" access="hasRole('ADMIN')" />
 		
 
 		
