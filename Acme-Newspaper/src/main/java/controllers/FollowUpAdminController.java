@@ -67,6 +67,17 @@ public class FollowUpAdminController extends AbstractController {
 
 		return res;
 	}
+	@RequestMapping(value = "/list-all", method = RequestMethod.GET)
+	public ModelAndView listAll() {
+		ModelAndView res;
+		final Collection<FollowUp> followUps = this.followUpService.findAll();
+		final String requestURI = "followUp/admin/list-all.do";
+		res = new ModelAndView("followUp/list");
+		res.addObject("followUps", followUps);
+		res.addObject("requestURI", requestURI);
+
+		return res;
+	}
 	//	Deleting
 	@RequestMapping(value = "/delete")
 	public ModelAndView delete(@RequestParam final int followUpId) {
