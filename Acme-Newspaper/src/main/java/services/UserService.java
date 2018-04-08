@@ -60,6 +60,12 @@ public class UserService {
 
 	public User save(final User user) {
 		Assert.notNull(user);
+		Assert.isTrue(!user.getUserAccount().getUsername().isEmpty());
+		Assert.isTrue(!user.getUserAccount().getPassword().isEmpty());
+		Assert.isTrue(!user.getAddress().isEmpty());
+		Assert.isTrue(!user.getEmail().isEmpty());
+		Assert.isTrue(!user.getName().isEmpty());
+		Assert.isTrue(!user.getSurname().isEmpty());
 
 		if (user.getId() == 0) {
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
