@@ -1,8 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.FollowUpRepository;
+import domain.Admin;
 import domain.Article;
 import domain.FollowUp;
 import domain.TabooWord;
@@ -29,6 +32,8 @@ public class FollowUpService {
 	private UserService			userService;
 	@Autowired
 	private TabooWordService	tabooWordService;
+	@Autowired
+	private AdminService		adminService;
 
 	@Autowired
 	private Validator			validator;
@@ -42,9 +47,14 @@ public class FollowUpService {
 
 	public FollowUp createFollowUp(final Article a) {
 		FollowUp res;
+		final User user = this.userService.findByPrincipal();
+		Assert.isTrue(a.getCreator().equals(user));
+		Assert.isTrue(a.getMoment() != null);
 		res = new FollowUp();
 		res.setMarked(false);
 		res.setArticle(a);
+		final List<String> urls = new ArrayList<String>();
+		res.setPictureUrls(urls);
 		return res;
 	}
 	public FollowUp save(final FollowUp followUp) {
@@ -52,7 +62,7 @@ public class FollowUpService {
 		FollowUp res;
 		final User user = this.userService.findByPrincipal();
 		Assert.isTrue(followUp.getArticle().getCreator().equals(user));
-		Assert.isTrue(followUp.getArticle().isFinalMode());
+		Assert.isTrue(followUp.getArticle().getMoment() != null);
 		final Collection<TabooWord> tw = this.tabooWordService.findAll();
 		boolean taboow = false;
 		for (final TabooWord word : tw) {
@@ -72,6 +82,8 @@ public class FollowUpService {
 	public void delete(final FollowUp followUp) {
 		assert followUp != null;
 		assert followUp.getId() != 0;
+		final List<Admin> admins = new ArrayList<Admin>(this.adminService.findAll());
+		Assert.isTrue(this.adminService.findByPrincipal().equals(admins.get(0)));
 		Assert.isTrue(this.followUpRepository.findOne(followUp.getId()) != null);
 		this.followUpRepository.delete(followUp.getId());
 

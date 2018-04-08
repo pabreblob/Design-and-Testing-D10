@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ArticleRepository;
+import domain.Admin;
 import domain.Article;
 import domain.FollowUp;
 import domain.TabooWord;
@@ -32,6 +35,8 @@ public class ArticleService {
 	private FollowUpService		followUpService;
 	@Autowired
 	private Validator			validator;
+	@Autowired
+	private AdminService		adminService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -46,13 +51,17 @@ public class ArticleService {
 		res.setCreator(creator);
 		res.setMarked(false);
 		res.setMoment(null);
+		final List<String> urls = new ArrayList<String>();
+		res.setPictureUrls(urls);
 		return res;
 	}
 	public Article save(final Article article) {
 		assert article != null;
+
 		Article res;
 		final User user = this.userService.findByPrincipal();
 		Assert.isTrue(article.getCreator().equals(user));
+		Assert.isTrue(article.getNewspaper().getPublicationDate() == null);
 
 		final Collection<TabooWord> tw = this.tabooWordService.findAll();
 		boolean taboow = false;
@@ -70,6 +79,8 @@ public class ArticleService {
 	public void delete(final Article article) {
 		assert article != null;
 		assert article.getId() != 0;
+		final List<Admin> admins = new ArrayList<Admin>(this.adminService.findAll());
+		Assert.isTrue(this.adminService.findByPrincipal().equals(admins.get(0)));
 		Assert.isTrue(this.articleRepository.findOne(article.getId()) != null);
 		final Collection<FollowUp> followups = this.followUpService.findFollowUpsByArticle(article.getId());
 		for (final FollowUp f : followups)
@@ -112,6 +123,7 @@ public class ArticleService {
 			result.setMoment(null);
 		} else {
 			result = this.articleRepository.findOne(article.getId());
+			Assert.isTrue(!result.isFinalMode());
 			result.setTitle(article.getTitle());
 			result.setSummary(article.getSummary());
 			result.setBody(article.getBody());
