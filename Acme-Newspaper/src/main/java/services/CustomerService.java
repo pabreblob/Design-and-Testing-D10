@@ -59,6 +59,7 @@ public class CustomerService {
 
 		if (customer.getId() == 0) {
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			Assert.notNull(customer.getUserAccount().getPassword());
 			final String hash = encoder.encodePassword(customer.getUserAccount().getPassword(), null);
 			customer.getUserAccount().setPassword(hash);
 		}
@@ -71,6 +72,8 @@ public class CustomerService {
 		final UserAccount ua = this.userAccountService.save(customer.getUserAccount());
 		customer.setUserAccount(ua);
 		final Customer res = this.customerRepository.save(customer);
+		Assert.notNull(res.getUserAccount().getUsername());
+		Assert.notNull(res.getUserAccount().getPassword());
 		return res;
 	}
 
@@ -86,7 +89,7 @@ public class CustomerService {
 		return res;
 	}
 
-	public Customer findByUserAccountId(final int customerAccountId) {
+	public Customer findCustomerByUserAccountId(final int customerAccountId) {
 		Assert.isTrue(customerAccountId != 0);
 		Customer res;
 		res = this.customerRepository.findCustomerByUserAccountId(customerAccountId);
@@ -95,7 +98,7 @@ public class CustomerService {
 
 	public Customer findByPrincipal() {
 		final UserAccount u = LoginService.getPrincipal();
-		final Customer res = this.customerRepository.findCustomerByUserAccountId(u.getId());
+		final Customer res = this.findCustomerByUserAccountId(u.getId());
 		return res;
 	}
 
