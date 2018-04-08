@@ -55,7 +55,10 @@ public class NewspaperService {
 		if (newspaper.getId() != 0)
 			Assert.isTrue(this.findOne(newspaper.getId()).getCreator().equals(this.userService.findByPrincipal()));
 		Assert.isNull(newspaper.getPublicationDate());
-
+		if (newspaper.getPrice() == 0)
+			newspaper.setFree(true);
+		else
+			newspaper.setFree(false);
 		final Collection<TabooWord> tw = this.tabooWordService.findAll();
 		boolean taboow = false;
 		for (final TabooWord word : tw) {
