@@ -45,6 +45,10 @@ public class SubscriptionService {
 		this.subscriptionRepository.delete(subscriptionId);
 	}
 
+	public Collection<Subscription> findAll() {
+		return this.subscriptionRepository.findAll();
+	}
+
 	public Subscription getSubscriptionByNewspaperAndPrincipal(final int newspaperId) {
 		final int customerId = this.customerService.findByPrincipal().getId();
 		return this.subscriptionRepository.getSubscriptionByNewspaperAndPrincipal(newspaperId, customerId);
