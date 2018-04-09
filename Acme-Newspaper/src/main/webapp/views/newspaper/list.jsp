@@ -73,7 +73,7 @@
 		</jstl:if>
 	</display:column>
 	<display:column>
-	<a href="newspaper/admin/delete.do?newspaperId=${n.id}"> <spring:message
+	<a href="newspaper/admin/delete.do?newspaperId=${n.id}&requestURI=${requestURI}"> <spring:message
 					code="newspaper.delete" />
 			</a>
 

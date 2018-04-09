@@ -52,12 +52,12 @@ public class NewspaperAdminController extends AbstractController {
 		System.out.println(requestURI);
 		try {
 			this.newspaperService.delete(newspaperId);
-			if (requestURI.equals("newspaper/admin/list.do"))
-				res = new ModelAndView(redirect1);
-			else
+			if (requestURI.equals("newspaper/admin/list-marked.do"))
 				res = new ModelAndView(redirect2);
+			else
+				res = new ModelAndView(redirect1);
 		} catch (final Exception e) {
-			if (requestURI == "newspaper/admin/list.do")
+			if (requestURI == "newspaper/admin/list-marked.do")
 				res = new ModelAndView(redirect1);
 			else
 				res = new ModelAndView(redirect2);
