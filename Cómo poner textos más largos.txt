@@ -1,7 +1,7 @@
 //USAR @Column
 
 @NotBlank
-@Column(length = 65535)
+@Column(length = Integer.MAX_VALUE)
 @SafeHtml(whitelistType = WhiteListType.NONE)
 public String getBody() {
 	return this.body;
