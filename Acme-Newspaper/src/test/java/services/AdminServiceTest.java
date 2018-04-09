@@ -29,7 +29,8 @@ public class AdminServiceTest extends AbstractTest {
 	 * This method tests that only an administrator can access to dashboard related services. An actor not authenticated at admin will not be able to use these services.
 	 * <p>
 	 * Case 1: An actor logged in as an administrator tries to display the dashboard information. The information is displayed succesfully <br>
-	 * Case 2: An actor who is not an administrator tries to display the dashboard information. This is expected to fail. Case 3: A person who is not logged tries to display the dashboard
+	 * Case 2: An actor who is not an administrator tries to display the dashboard information. This is expected to fail.<br>
+	 * Case 3: A person who is not logged tries to display the dashboard
 	 */
 	@Test
 	public void driverDashboard() {
