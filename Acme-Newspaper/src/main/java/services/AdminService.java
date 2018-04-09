@@ -120,14 +120,16 @@ public class AdminService {
 	public double standardDeviationNewspaperPerUser() {
 		final double newspaperCreated = 1.0 * this.newspaperService.findAll().size();
 		final double users = 1.0 * this.userService.findAll().size();
+		final double avg = this.averageNewspaperPerUser();
 		double res = 0.;
 		double sum = 0.;
+		int temp;
 		for (final User u : this.userService.findAll()) {
-			final int temp = this.newspaperService.findNewspaperCreatedByUserId(u.getId()).size();
-			sum += temp * temp;
+			temp = this.newspaperService.findNewspaperCreatedByUserId(u.getId()).size();
+			sum += (temp - avg) * (temp - avg);
 		}
 		if (!(newspaperCreated == 0 || users == 0))
-			res = Math.sqrt(sum / newspaperCreated - (this.averageNewspaperPerUser() * this.averageNewspaperPerUser()));
+			res = Math.sqrt(sum / (newspaperCreated - 1));
 		return res;
 	}
 	public double averageArticlesPerWriter() {
@@ -141,16 +143,16 @@ public class AdminService {
 	public double standardDeviationArticlesPerWriter() {
 		final double articlesCreated = 1.0 * this.articleService.findAll().size();
 		final double users = 1.0 * this.adminRepository.listOfWriters().size();
+		final double avg = this.averageArticlesPerNewspaper();
 		double res = 0.;
 		double sum = 0.;
+		int temp;
 		for (final User u : this.adminRepository.listOfWriters()) {
-			final int temp = this.adminRepository.findArticlesPerUser(u.getId()).size();
-			sum += temp * temp;
+			temp = this.adminRepository.findArticlesPerUser(u.getId()).size();
+			sum += (temp - avg) * (temp - avg);
 		}
-		if (!(articlesCreated == 0 || users == 0)) {
-			final double avg = this.averageArticlesPerWriter();
-			res = Math.sqrt(sum / articlesCreated - (avg * avg));
-		}
+		if (!(articlesCreated == 0 || users == 0))
+			res = Math.sqrt(sum / (articlesCreated - 1));
 		return res;
 	}
 	public double averageArticlesPerNewspaper() {
@@ -164,16 +166,16 @@ public class AdminService {
 	public double standardDeviationArticlesPerNewspaper() {
 		final double articlesCreated = 1.0 * this.articleService.findAll().size();
 		final double newspaperCreated = 1.0 * this.newspaperService.findAll().size();
+		final double avg = this.averageArticlesPerNewspaper();
 		double res = 0.;
 		double sum = 0.;
+		int temp;
 		for (final Newspaper n : this.newspaperService.findAll()) {
-			final int temp = this.articleService.findArticlesByNewspaper(n.getId()).size();
-			sum += temp * temp;
+			temp = this.articleService.findArticlesByNewspaper(n.getId()).size();
+			sum += (temp - avg) * (temp - avg);
 		}
-		if (!(articlesCreated == 0 || newspaperCreated == 0)) {
-			final double avg = this.averageArticlesPerNewspaper();
-			res = Math.sqrt(sum / articlesCreated - (avg * avg));
-		}
+		if (!(articlesCreated == 0 || newspaperCreated == 0))
+			res = Math.sqrt(sum / (articlesCreated - 1));
 		return res;
 	}
 	public List<List<Newspaper>> newspaperWithTenPercent() {
