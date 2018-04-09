@@ -5,8 +5,11 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -22,6 +25,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+	@Index(columnList = "publicationDate"), @Index(columnList = "creator_id"), @Index(columnList = "marked")
+})
 public class Newspaper extends DomainEntity {
 
 	private String	title;
@@ -63,6 +69,7 @@ public class Newspaper extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@Column(length = Integer.MAX_VALUE)
 	public String getDescription() {
 		return this.description;
 	}
