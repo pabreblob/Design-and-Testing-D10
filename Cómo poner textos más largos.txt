@@ -1,0 +1,8 @@
+//USAR @Column
+
+@NotBlank
+@Column(length = 65535)
+@SafeHtml(whitelistType = WhiteListType.NONE)
+public String getBody() {
+	return this.body;
+}
