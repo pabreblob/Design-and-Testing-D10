@@ -6,9 +6,12 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -22,6 +25,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+	@Index(columnList = "marked"), @Index(columnList = "article_id")
+})
 public class FollowUp extends DomainEntity {
 
 	private String				title;
@@ -63,6 +69,7 @@ public class FollowUp extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@Column(length = Integer.MAX_VALUE)
 	public String getSummary() {
 		return this.summary;
 	}
@@ -73,6 +80,7 @@ public class FollowUp extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@Column(length = Integer.MAX_VALUE)
 	public String getBody() {
 		return this.body;
 	}
