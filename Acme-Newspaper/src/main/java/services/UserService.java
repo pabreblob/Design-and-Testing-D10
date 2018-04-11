@@ -62,7 +62,6 @@ public class UserService {
 		Assert.notNull(user);
 		Assert.isTrue(!user.getUserAccount().getUsername().isEmpty());
 		Assert.isTrue(!user.getUserAccount().getPassword().isEmpty());
-		Assert.isTrue(!user.getAddress().isEmpty());
 		Assert.isTrue(!user.getEmail().isEmpty());
 		Assert.isTrue(!user.getName().isEmpty());
 		Assert.isTrue(!user.getSurname().isEmpty());
