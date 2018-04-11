@@ -37,20 +37,18 @@ public class FollowUpUserController extends AbstractController {
 
 	//	Displaying
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int articleId) {
+	public ModelAndView display(@RequestParam final int followUpId) {
 		ModelAndView res;
-		final Article article = this.articleService.findOne(articleId);
-		Assert.isTrue(article.getNewspaper().isFree() || article.getCreator().getId() == this.userService.findByPrincipal().getId());
+		final FollowUp followUp = this.followUpService.findOne(followUpId);
+		Assert.isTrue(followUp.getArticle().getNewspaper().isFree() || followUp.getArticle().getCreator().getId() == this.userService.findByPrincipal().getId());
 		final String requestURI = "article/user/display.do";
-		final List<String> pictures = new ArrayList<String>(article.getPictureUrls());
+		final List<String> pictures = new ArrayList<String>(followUp.getPictureUrls());
 		final boolean hasPictures = !pictures.isEmpty();
-		final boolean hasFollowUps = !this.followUpService.findFollowUpsByArticle(articleId).isEmpty();
 
-		res = new ModelAndView("article/display");
-		res.addObject("article", article);
+		res = new ModelAndView("followUp/display");
+		res.addObject("followUp", followUp);
 		res.addObject("pictures", pictures);
 		res.addObject("hasPictures", hasPictures);
-		res.addObject("hasFollowUps", hasFollowUps);
 		res.addObject("requestURI", requestURI);
 
 		return res;
