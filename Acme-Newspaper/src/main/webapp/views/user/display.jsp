@@ -58,7 +58,7 @@
 <br>
 <h1><spring:message code="user.articles"/></h1>
 
-<display:table class="displaytag" name="articles" id="row" requestURI="user/display.do" pagesize="5" defaultsort="2" defaultorder="descending">
+<display:table class="displaytag" name="articles" requestURI="user/display.do" pagesize="5" uid="ar" defaultsort="2" defaultorder="descending">
 	
 	<spring:message code="user.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" />
@@ -66,20 +66,20 @@
 	<spring:message code="welcome.chirp.format" var="dateFormat" />
 	<spring:message code="user.moment" var="momentHeader"/>
 	<display:column title="${momentHeader}">
-		<fmt:formatDate value="${row.moment}" pattern="${dateFormat}"/>
+		<fmt:formatDate value="${ar.moment}" pattern="${dateFormat}"/>
 	</display:column>
 	
 	<spring:message code="user.newspaper" var="newspaperHeader" />
 	<display:column property="newspaper.title" title="${newspaperHeader}" />
 	<display:column>
-		<a href="newspaper/display.do?newspaperId=${row.newspaper.id}"><spring:message code="user.newspaperURL"/></a>
+		<a href="newspaper/display.do?newspaperId=${ar.newspaper.id}"><spring:message code="user.newspaperURL"/></a>
 	</display:column>
 	
 </display:table>
 
 <h1>Chirps</h1>
 
-<display:table class="displaytag" name="chirps" id="row" requestURI="user/display.do" pagesize="20" defaultsort="3" defaultorder="descending">
+<display:table class="displaytag" name="chirps" requestURI="user/display.do" pagesize="20" defaultsort="3" uid="ch" defaultorder="descending">
 	
 	<spring:message code="welcome.chirp.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" />
@@ -90,7 +90,7 @@
 	<spring:message code="welcome.chirp.moment" var="momentHeader" />
 	<spring:message code="welcome.chirp.format" var="dateFormat" />
 	<display:column title="${momentHeader}">
-		<fmt:formatDate value="${row.moment}" pattern="${dateFormat}"/>
+		<fmt:formatDate value="${ch.moment}" pattern="${dateFormat}"/>
 	</display:column>
 
 </display:table>
