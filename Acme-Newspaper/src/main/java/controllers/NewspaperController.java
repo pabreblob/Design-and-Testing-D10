@@ -67,6 +67,7 @@ public class NewspaperController extends AbstractController {
 		Boolean needPay = false;
 		Boolean available = false;
 		final Newspaper newspaper = this.newspaperService.findOne(newspaperId);
+		Assert.notNull(newspaper);
 
 		try {
 			LoginService.getPrincipal().getId();
