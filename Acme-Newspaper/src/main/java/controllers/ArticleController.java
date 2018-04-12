@@ -34,6 +34,7 @@ public class ArticleController extends AbstractController {
 	public ModelAndView display(@RequestParam final int articleId) {
 		ModelAndView res;
 		final Article article = this.articleService.findOne(articleId);
+		Assert.notNull(article);
 		Assert.isTrue(article.getNewspaper().isFree());
 		final String requestURI = "article/display.do";
 		final List<String> pictures = new ArrayList<String>(article.getPictureUrls());
