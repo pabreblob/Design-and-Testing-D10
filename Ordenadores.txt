@@ -9,3 +9,9 @@ Procesador: Intel(R) Core(TM) i7-7700HQ (2.8 GHz, Turbo Boost up to 3.8 GHz, 6 M
 RAM: SDRAM 8 GB DDR4-2400 (2x4 GB)
 HDD: 1 TB SATA 7200 rpm
 Network Adapter: Intel(R) Dual Band Wireless-AC 7265
+
+Pablo N.:
+Procesador: Intel Core i5-7300HQ (2,5 GHz hasta 3,5 GHz con tecnología Intel Turbo Boost , 6 MB de caché, 4 núcleos)
+RAM: SDRAM 8 GB DDR4-2400 (1 x 8 GB)
+HDD: SATA de 1 TB GB 7200 rpm
+Network Adapter: Intel(R) Dual Band Wireless-AC 7265
