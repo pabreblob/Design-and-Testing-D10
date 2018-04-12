@@ -302,7 +302,7 @@ public class AdminService {
 	}
 	public double ratioOfSubscribersPerPrivateNewspaperVersusAllCustomers() {
 		final int cust = this.customerService.findAll().size();
-		if (cust == 0)
+		if (cust != 0)
 			return (this.averageSubscribersPerPrivateNewspaper() * 1.0) / (cust * 1.0);
 		else
 			return 0.;
