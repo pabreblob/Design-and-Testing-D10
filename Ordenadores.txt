@@ -1,0 +1,5 @@
+Daniel:
+Procesador: Intel(R)Core(TM) i5-7200U 2.5GHz with Turbo Boost up to 3.1GHz
+RAM: 8GB DDR4
+Disco duro: 1000 GB HDD
+Adaptador de Red: Intel(R) Dual Band Wireless-AC 3168
