@@ -265,7 +265,8 @@ public class AdminService {
 				userWhoHas++;
 			else
 				userWhoHasNot++;
-		res = (1.0 * userWhoHas) / (1.0 * userWhoHasNot);
+		if (userWhoHasNot != 0)
+			res = (1.0 * userWhoHas) / (1.0 * userWhoHasNot);
 		return res;
 	}
 	public double ratioOfPublicNewspaperVersusPrivateNewspaper() {
@@ -300,7 +301,11 @@ public class AdminService {
 			return (1.0 * subscribers) / (1.0 * newspapers);
 	}
 	public double ratioOfSubscribersPerPrivateNewspaperVersusAllCustomers() {
-		return (this.averageSubscribersPerPrivateNewspaper() * 1.0) / (this.customerService.findAll().size() * 1.0);
+		final int cust = this.customerService.findAll().size();
+		if (cust == 0)
+			return (this.averageSubscribersPerPrivateNewspaper() * 1.0) / (cust * 1.0);
+		else
+			return 0.;
 	}
 	private double ratioPrivateVersusPublicPerPublisher(final int userId) {
 		final Double res = this.adminRepository.ratioOfPrivateNewspaperVersusPublicNewspaper(userId);
